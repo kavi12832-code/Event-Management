@@ -400,12 +400,15 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   /* ==========================================================================
-     2. 3D ANIMATED VENUES MARQUEE ENGINE
+     2. DUAL 3D MARQUEE & MANUAL DRAG / ARROW SLIDER ENGINE
      ========================================================================== */
   function initVenue3DMarquee() {
+    const viewport = document.getElementById('venuesMarqueeViewport');
     const track1 = document.getElementById('venuesMarqueeTrack1');
     const track2 = document.getElementById('venuesMarqueeTrack2');
-    if (!track1 || !track2) return;
+    const prevBtn = document.getElementById('venueSlidePrev');
+    const nextBtn = document.getElementById('venueSlideNext');
+    if (!track1 || !track2 || !viewport) return;
 
     // Distribute venues into 2 tracks for dynamic counter-scrolling (6 each)
     const midPoint = Math.ceil(venuesData.length / 2);
@@ -511,8 +514,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const xPct = mouseX / bounds.width;
         const yPct = mouseY / bounds.height;
         
-        const tiltX = (0.5 - yPct) * 18; // degrees
-        const tiltY = (xPct - 0.5) * 18; // degrees
+        const tiltX = (0.5 - yPct) * 18;
+        const tiltY = (xPct - 0.5) * 18;
 
         card.style.setProperty('--mouse-x', `${(xPct * 100).toFixed(1)}%`);
         card.style.setProperty('--mouse-y', `${(yPct * 100).toFixed(1)}%`);
@@ -532,19 +535,172 @@ document.addEventListener('DOMContentLoaded', () => {
       return card;
     }
 
-    // Populate Track 1 (quadrupled for seamless infinite ribbon)
+    // Populate Track 1 (repeated for seamless wrap)
     track1.innerHTML = '';
-    const track1List = [...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues];
+    const track1List = [...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues];
     track1List.forEach(v => {
       track1.appendChild(createVenueCard(v));
     });
 
-    // Populate Track 2 (quadrupled for seamless infinite ribbon)
+    // Populate Track 2 (repeated for seamless wrap)
     track2.innerHTML = '';
-    const track2List = [...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues];
+    const track2List = [...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues];
     track2List.forEach(v => {
       track2.appendChild(createVenueCard(v));
     });
+
+    // Disable pure CSS animation so JS marquee & manual dragging have complete authority
+    track1.style.animation = 'none';
+    track2.style.animation = 'none';
+
+    // Dual-Mode State
+    let pos1 = 0;
+    let pos2 = 0;
+    let isDragging = false;
+    let startX = 0;
+    let autoMarqueeActive = true;
+    const marqueeSpeed1 = -0.7; // px per frame (left)
+    const marqueeSpeed2 = 0.7;  // px per frame (right)
+
+    let singleSetWidth1 = 0;
+    let singleSetWidth2 = 0;
+
+    function measureWidths() {
+      if (track1.children.length > 0) {
+        singleSetWidth1 = track1.scrollWidth / 6;
+      }
+      if (track2.children.length > 0) {
+        singleSetWidth2 = track2.scrollWidth / 6;
+      }
+      if (pos2 === 0 && singleSetWidth2 > 0) {
+        pos2 = -singleSetWidth2 * 2;
+      }
+    }
+
+    setTimeout(measureWidths, 300);
+    window.addEventListener('resize', measureWidths);
+
+    // Continuous Animation Frame Marquee Loop
+    function marqueeLoop() {
+      if (singleSetWidth1 > 0 && singleSetWidth2 > 0) {
+        if (autoMarqueeActive && !isDragging) {
+          pos1 += marqueeSpeed1;
+          pos2 += marqueeSpeed2;
+
+          // Wrap pos1 (leftwards)
+          if (pos1 <= -singleSetWidth1 * 3) {
+            pos1 += singleSetWidth1;
+          } else if (pos1 >= 0) {
+            pos1 -= singleSetWidth1;
+          }
+
+          // Wrap pos2 (rightwards)
+          if (pos2 >= 0) {
+            pos2 -= singleSetWidth2;
+          } else if (pos2 <= -singleSetWidth2 * 3) {
+            pos2 += singleSetWidth2;
+          }
+        }
+
+        track1.style.transform = `translate3d(${pos1.toFixed(2)}px, 0, 0)`;
+        track2.style.transform = `translate3d(${pos2.toFixed(2)}px, 0, 0)`;
+      }
+
+      requestAnimationFrame(marqueeLoop);
+    }
+
+    requestAnimationFrame(marqueeLoop);
+
+    // --- MANUAL SLIDE CONTROLS: DRAG & TOUCH SWIPE ---
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.venue-slide-btn') || e.target.closest('.convergence-play-badge')) return;
+      isDragging = true;
+      startX = e.clientX;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const currentX = e.clientX;
+      const diff = currentX - startX;
+      startX = currentX;
+
+      pos1 += diff;
+      pos2 += diff;
+
+      if (singleSetWidth1 > 0) {
+        if (pos1 <= -singleSetWidth1 * 3) pos1 += singleSetWidth1;
+        if (pos1 >= 0) pos1 -= singleSetWidth1;
+      }
+      if (singleSetWidth2 > 0) {
+        if (pos2 >= 0) pos2 -= singleSetWidth2;
+        if (pos2 <= -singleSetWidth2 * 3) pos2 += singleSetWidth2;
+      }
+
+      track1.style.transform = `translate3d(${pos1.toFixed(2)}px, 0, 0)`;
+      track2.style.transform = `translate3d(${pos2.toFixed(2)}px, 0, 0)`;
+    });
+
+    function endDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      viewport.classList.remove('is-dragging');
+      try {
+        if (e && e.pointerId) viewport.releasePointerCapture(e.pointerId);
+      } catch(err) {}
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    // --- MANUAL SLIDER ARROW BUTTONS (< and >) ---
+    function smoothNudge(amount) {
+      const startTime = performance.now();
+      const startPos1 = pos1;
+      const startPos2 = pos2;
+      const duration = 420;
+
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const ease = 1 - Math.pow(1 - progress, 3);
+
+        pos1 = startPos1 + (amount * ease);
+        pos2 = startPos2 + (amount * ease);
+
+        if (singleSetWidth1 > 0) {
+          if (pos1 <= -singleSetWidth1 * 3) pos1 += singleSetWidth1;
+          if (pos1 >= 0) pos1 -= singleSetWidth1;
+        }
+        if (singleSetWidth2 > 0) {
+          if (pos2 >= 0) pos2 -= singleSetWidth2;
+          if (pos2 <= -singleSetWidth2 * 3) pos2 += singleSetWidth2;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        smoothNudge(380);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        smoothNudge(-380);
+      });
+    }
+
+    viewport.addEventListener('mouseenter', () => { autoMarqueeActive = false; });
+    viewport.addEventListener('mouseleave', () => { if (!isDragging) autoMarqueeActive = true; });
   }
 
   initVenue3DMarquee();
@@ -1403,7 +1559,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================================================
-     6. REVIEWS & TESTIMONIALS SLIDER
+     5.5. BESPOKE WEDDING COLLECTIONS TAB FILTERING & INTERACTION
+     ========================================================================== */
+  const investmentTabs = document.querySelectorAll('.investment-tab');
+  const packageCards = document.querySelectorAll('.package-card');
+
+  investmentTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      investmentTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.getAttribute('data-pkg-filter');
+
+      packageCards.forEach(card => {
+        const pkgName = card.querySelector('.pkg-name') ? card.querySelector('.pkg-name').textContent : '';
+        if (filter === 'all') {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+        } else if (filter === 'intimate' && pkgName.includes('Intimate')) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+        } else if (filter === 'heritage' && pkgName.includes('Heritage')) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+        } else if (filter === 'couture' && pkgName.includes('Couture')) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Clicking on .pkg-tag also triggers the corresponding collection tab
+  const packageTags = document.querySelectorAll('.package-card .pkg-tag');
+  packageTags.forEach(tag => {
+    tag.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parentCard = tag.closest('.package-card');
+      const nameEl = parentCard ? parentCard.querySelector('.pkg-name') : null;
+      const name = nameEl ? nameEl.textContent : '';
+      let targetFilter = 'all';
+      if (name.includes('Intimate')) targetFilter = 'intimate';
+      else if (name.includes('Heritage')) targetFilter = 'heritage';
+      else if (name.includes('Couture')) targetFilter = 'couture';
+
+      const matchedTab = document.querySelector(`.investment-tab[data-pkg-filter="${targetFilter}"]`);
+      if (matchedTab) {
+        matchedTab.click();
+      }
+    });
+  });
+
+
+  /* ==========================================================================
+     6. REVIEWS & TESTIMONIALS SLIDER (2-SECOND AUTO ROTATION)
      ========================================================================== */
   const reviewsData = [
     {
@@ -1423,6 +1633,18 @@ document.addEventListener('DOMContentLoaded', () => {
       venue: 'Canaves Oia Epitome, Santorini, Greece',
       quote: '“From our first consultation call to the final hand-bound Italian leather album delivery, the craftsmanship was museum-tier. They captured the true soul of our cliffside vows.”',
       avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=200&auto=format&fit=crop'
+    },
+    {
+      names: 'Ananya & Raghav Singhania',
+      venue: 'The Leela Palace, Udaipur, India',
+      quote: '“Every sacred Vedic ritual, floral cascade, and candlelit courtyard was documented with cinematic grandeur. BIZEVENTS transformed our wedding into a timeless royal heirloom.”',
+      avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=200&auto=format&fit=crop'
+    },
+    {
+      names: 'Charlotte & William Spencer',
+      venue: 'Kew Royal Botanic Gardens, London, UK',
+      quote: '“An absolute triumph of editorial composition and intimate sound design. Watching our feature film brought tears to our eyes all over again. Unrivaled luxury experience.”',
+      avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop'
     }
   ];
 
@@ -1431,6 +1653,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prevReviewBtn = document.getElementById('prevReviewBtn');
   const nextReviewBtn = document.getElementById('nextReviewBtn');
   let currentReviewIdx = 0;
+  let reviewAutoTimer = null;
 
   function renderReviews() {
     if (!reviewTrack) return;
@@ -1466,16 +1689,33 @@ document.addEventListener('DOMContentLoaded', () => {
         dot.addEventListener('click', () => {
           currentReviewIdx = idx;
           renderReviews();
+          startReviewAutoTimer();
         });
         reviewDots.appendChild(dot);
       }
     });
   }
 
+  function startReviewAutoTimer() {
+    stopReviewAutoTimer();
+    reviewAutoTimer = setInterval(() => {
+      currentReviewIdx = (currentReviewIdx + 1) % reviewsData.length;
+      renderReviews();
+    }, 2000); // changes automatically every 2 seconds
+  }
+
+  function stopReviewAutoTimer() {
+    if (reviewAutoTimer) {
+      clearInterval(reviewAutoTimer);
+      reviewAutoTimer = null;
+    }
+  }
+
   if (prevReviewBtn) {
     prevReviewBtn.addEventListener('click', () => {
       currentReviewIdx = (currentReviewIdx - 1 + reviewsData.length) % reviewsData.length;
       renderReviews();
+      startReviewAutoTimer();
     });
   }
 
@@ -1483,10 +1723,19 @@ document.addEventListener('DOMContentLoaded', () => {
     nextReviewBtn.addEventListener('click', () => {
       currentReviewIdx = (currentReviewIdx + 1) % reviewsData.length;
       renderReviews();
+      startReviewAutoTimer();
     });
   }
 
   renderReviews();
+  startReviewAutoTimer();
+
+  // Pause timer on hover so user can comfortably read, resume when mouse leaves
+  const reviewsContainer = document.querySelector('.reviews-slider-container');
+  if (reviewsContainer) {
+    reviewsContainer.addEventListener('mouseenter', stopReviewAutoTimer);
+    reviewsContainer.addEventListener('mouseleave', startReviewAutoTimer);
+  }
 
 
   /* ==========================================================================
@@ -1539,8 +1788,32 @@ document.addEventListener('DOMContentLoaded', () => {
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const submitBtn = document.getElementById('newsletterSubmitBtn');
+      const successMsg = document.getElementById('newsletterSuccessMsg');
+      
+      if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Dispatched!';
+        submitBtn.style.background = '#10B981';
+        submitBtn.style.color = '#FFFFFF';
+        submitBtn.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.45)';
+      }
+      if (successMsg) {
+        successMsg.style.display = 'inline-flex';
+      }
       showToast('Your 48-Page Destination Wedding Planning Guide has been dispatched to your inbox.');
-      newsletterForm.reset();
+
+      setTimeout(() => {
+        newsletterForm.reset();
+        if (submitBtn) {
+          submitBtn.innerHTML = '<span class="btn-text">Get Guide</span> <i class="fa-solid fa-arrow-right arrow-anim"></i>';
+          submitBtn.style.background = '';
+          submitBtn.style.color = '';
+          submitBtn.style.boxShadow = '';
+        }
+        if (successMsg) {
+          successMsg.style.display = 'none';
+        }
+      }, 5000);
     });
   }
 
