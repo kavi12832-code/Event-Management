@@ -482,16 +482,22 @@ button, input, select, textarea {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: clamp(10px, 1.6vw, 24px);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-link {
   font-size: 13.5px;
   font-weight: 500;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: var(--text-body);
   position: relative;
   padding: 6px 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-block;
+  line-height: 1.4;
   transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.25s ease, transform 0.25s ease;
 }
 
@@ -2714,6 +2720,29 @@ body.dark-theme .theme-icon-dark {
 /* ==========================================================================
    RESPONSIVE DESIGN (TABLETS & MOBILE)
    ========================================================================== */
+@media (max-width: 1260px) {
+  .nav-links {
+    gap: 14px;
+  }
+  .nav-link {
+    font-size: 12.5px;
+  }
+  .theme-toggle-text {
+    display: none;
+  }
+  .brand-title {
+    font-size: 18px;
+    letter-spacing: 0.14em;
+  }
+  .brand-subtitle {
+    font-size: 8px;
+  }
+  .btn-gold-pill {
+    padding: 10px 18px;
+    font-size: 11.5px;
+  }
+}
+
 @media (max-width: 1024px) {
   .nav-links {
     display: none;
