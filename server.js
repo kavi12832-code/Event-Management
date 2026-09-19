@@ -99,6 +99,35 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`BIZEVENTS Atelier Luxury Wedding Website running at http://localhost:${PORT}`);
+const os = require('os');
+
+function getNetworkIps() {
+  const interfaces = os.networkInterfaces();
+  const ips = [];
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal && !iface.address.startsWith('169.254')) {
+        const isVirtual = /vethernet|wsl|virtual|docker|vmware/i.test(name);
+        ips.push({ name, address: iface.address, isVirtual });
+      }
+    }
+  }
+  ips.sort((a, b) => (a.isVirtual ? 1 : 0) - (b.isVirtual ? 1 : 0));
+  return ips;
+}
+
+const networkIps = getNetworkIps();
+const primaryWifiIp = networkIps.length > 0 ? networkIps[0].address : 'localhost';
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`\n======================================================`);
+  console.log(`  BIZEVENTS ATELIER LUXURY WEBSITE SERVER`);
+  console.log(`  Local URL:       http://localhost:${PORT}`);
+  console.log(`  Mobile Wi-Fi IP: http://${primaryWifiIp}:${PORT}`);
+  networkIps.slice(1).forEach(item => {
+    console.log(`  Alt (${item.name}): http://${item.address}:${PORT}`);
+  });
+  console.log(`======================================================\n`);
 });
+
+

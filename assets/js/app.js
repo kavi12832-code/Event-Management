@@ -62,131 +62,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================================================
-     1. 300-FRAME CONTINUOUS BACKGROUND CINEMA LOOP ENGINE
+     1. HARDWARE-ACCELERATED HERO CINEMATIC VIDEO ENGINE (ZERO-LAG 60FPS)
      ========================================================================== */
+  const heroVideo = document.getElementById('heroVideo');
   const canvas = document.getElementById('videoCanvas');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas ? canvas.getContext('2d') : null;
   const loader = document.getElementById('canvasLoader');
   const loaderFill = document.getElementById('loaderFill');
   const loaderCount = document.getElementById('loaderCount');
 
-  const TOTAL_FRAMES = 240;
-  const frameImages = [];
-  let loadedFramesCount = 0;
-  let currentFrame = 1;
-  const FPS = 25; // Smooth cinematic 25 frames per second
-  const frameDuration = 1000 / FPS;
-  let lastFrameTime = performance.now();
+  let isHeroVisible = true;
 
-  // Format frame number to 3-digit string (e.g. 001, 042, 240)
-  function getFramePath(index) {
-    const padIndex = String(index).padStart(3, '0');
-    return `assets/frames/hero/ezgif-frame-${padIndex}.jpg`;
+  function dismissLoader() {
+    if (loader) {
+      loader.classList.add('loaded');
+      if (loaderFill) loaderFill.style.width = '100%';
+      if (loaderCount) loaderCount.textContent = '100%';
+    }
   }
 
-  // Preload all 240 frames with progressive progress reporting
-  function preloadFrames() {
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = getFramePath(i);
-      img.onload = () => {
-        loadedFramesCount++;
-        const percent = Math.floor((loadedFramesCount / TOTAL_FRAMES) * 100);
-        if (loaderFill) loaderFill.style.width = `${percent}%`;
-        if (loaderCount) loaderCount.textContent = `${percent}%`;
+  // Instant hardware-accelerated video playback with GPU acceleration
+  if (heroVideo) {
+    heroVideo.play().then(dismissLoader).catch(() => {
+      // Browser low-power mode may require touch/click
+    });
 
-        // Render initial frame as soon as ready
-        if (loadedFramesCount === 1) {
-          renderFrame(1);
-          if (loader) loader.classList.add('loaded');
+    heroVideo.addEventListener('playing', dismissLoader, { once: true });
+    heroVideo.addEventListener('canplay', dismissLoader, { once: true });
+    heroVideo.addEventListener('loadeddata', dismissLoader, { once: true });
+
+    // Touch/click listener to unlock instant playback on mobile devices
+    const unlockHeroVideo = () => {
+      if (heroVideo.paused && isHeroVisible) {
+        heroVideo.play().then(dismissLoader).catch(() => {});
+      }
+    };
+    document.addEventListener('touchstart', unlockHeroVideo, { once: true, passive: true });
+    document.addEventListener('click', unlockHeroVideo, { once: true, passive: true });
+
+    // Safety timeout: dismiss loader immediately so mobile users never wait
+    setTimeout(dismissLoader, 150);
+  } else {
+    dismissLoader();
+  }
+
+  // Observe hero visibility: pause video when scrolled down to rest of page
+  const heroSection = document.getElementById('hero');
+  if (heroSection && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          isHeroVisible = true;
+          if (heroVideo && heroVideo.paused) {
+            heroVideo.play().catch(() => {});
+          }
+        } else {
+          isHeroVisible = false;
+          if (heroVideo && !heroVideo.paused) {
+            heroVideo.pause();
+          }
         }
-
-        // Hide loader once initial buffer is ready
-        if (loadedFramesCount >= 10 && loader) {
-          loader.classList.add('loaded');
-        }
-      };
-      img.onerror = () => {
-        loadedFramesCount++;
-        if (loader) {
-          loader.classList.add('loaded');
-        }
-      };
-      frameImages.push(img);
-    }
+      });
+    }, { threshold: 0.02 });
+    heroObserver.observe(heroSection);
   }
-
-  // Draw image frame on canvas maintaining cover aspect ratio
-  function renderFrame(frameNum) {
-    const clampedNum = Math.max(1, Math.min(TOTAL_FRAMES, Math.floor(frameNum)));
-    const img = frameImages[clampedNum - 1];
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    // High DPI Canvas Scaling
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    
-    if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-    }
-
-    ctx.save();
-    ctx.scale(dpr, dpr);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-
-    // Compute cover fit coordinates
-    const canvasWidth = rect.width;
-    const canvasHeight = rect.height;
-    const imgWidth = img.naturalWidth;
-    const imgHeight = img.naturalHeight;
-
-    const imgRatio = imgWidth / imgHeight;
-    const canvasRatio = canvasWidth / canvasHeight;
-
-    let renderWidth, renderHeight, offsetX, offsetY;
-
-    if (canvasRatio > imgRatio) {
-      renderWidth = canvasWidth;
-      renderHeight = canvasWidth / imgRatio;
-      offsetX = 0;
-      offsetY = (canvasHeight - renderHeight) / 2;
-    } else {
-      renderWidth = canvasHeight * imgRatio;
-      renderHeight = canvasHeight;
-      offsetX = (canvasWidth - renderWidth) / 2;
-      offsetY = 0;
-    }
-
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
-    ctx.restore();
-  }
-
-  // Smooth continuous video playback animation loop
-  function loopPlayback(timestamp) {
-    const elapsed = timestamp - lastFrameTime;
-
-    if (elapsed >= frameDuration) {
-      currentFrame = (currentFrame % TOTAL_FRAMES) + 1;
-      renderFrame(currentFrame);
-      lastFrameTime = timestamp - (elapsed % frameDuration);
-    }
-
-    requestAnimationFrame(loopPlayback);
-  }
-
-  // Handle window resize for dynamic canvas sharpness
-  window.addEventListener('resize', () => {
-    if (loadedFramesCount > 0) {
-      renderFrame(currentFrame);
-    }
-  });
-
-  // Initialize frame preloading and auto-play
-  preloadFrames();
-  requestAnimationFrame(loopPlayback);
 
 
   /* ==========================================================================
@@ -400,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   /* ==========================================================================
-     2. DUAL 3D MARQUEE & MANUAL DRAG / ARROW SLIDER ENGINE
+     2. DUAL 3D MARQUEE & FLUID BIDIRECTIONAL MOMENTUM SWIPE ENGINE
      ========================================================================== */
   function initVenue3DMarquee() {
     const viewport = document.getElementById('venuesMarqueeViewport');
@@ -425,7 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="venue-3d-media-wrap">
           <img src="${v.image}" alt="${v.name}" loading="lazy" />
-          ${v.framesFolder ? `<canvas class="venue-3d-canvas"></canvas>` : ''}
           <div class="venue-3d-sheen"></div>
           <span class="venue-3d-badge">${v.priceLevel || 'CURATED ESTATE'}</span>
         </div>
@@ -435,169 +373,114 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
 
-      if (v.framesFolder) {
-        const canvas = card.querySelector('.venue-3d-canvas');
-        const ctx = canvas ? canvas.getContext('2d') : null;
-        const total = v.totalFrames || 300;
-        const frameImages = [];
-        let isLoaded = false;
-        let isPlaying = false;
-        let curFrame = 0;
-        let lastTime = 0;
-        let animId = null;
-        const frameDelay = 1000 / 30;
-
-        const firstImg = new Image();
-        firstImg.src = `${v.framesFolder}/frame_001.jpg`;
-        firstImg.onload = () => {
-          if (canvas && ctx) {
-            canvas.width = firstImg.naturalWidth || 380;
-            canvas.height = firstImg.naturalHeight || 270;
-            ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
-          }
-        };
-
-        function loadFrames() {
-          if (isLoaded) return;
-          isLoaded = true;
-          for (let i = 1; i <= total; i++) {
-            const img = new Image();
-            const num = String(i).padStart(3, '0');
-            img.src = `${v.framesFolder}/frame_${num}.jpg`;
-            frameImages.push(img);
-          }
-        }
-
-        function loop(timestamp) {
-          if (!isPlaying) return;
-          if (!lastTime) lastTime = timestamp;
-          const elapsed = timestamp - lastTime;
-          if (elapsed >= frameDelay) {
-            lastTime = timestamp - (elapsed % frameDelay);
-            curFrame = (curFrame + 1) % total;
-            const img = frameImages[curFrame];
-            if (img && img.complete && ctx && canvas) {
-              if (canvas.width !== img.naturalWidth && img.naturalWidth > 0) {
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-              }
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            }
-          }
-          animId = requestAnimationFrame(loop);
-        }
-
-        card.addEventListener('mouseenter', () => {
-          loadFrames();
-          isPlaying = true;
-          lastTime = 0;
-          animId = requestAnimationFrame(loop);
+      // Interactive 3D Perspective Tilt on Pointer Move (Desktop fine-pointer only to maximize mobile 60FPS)
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        let bounds = null;
+        card.addEventListener('pointerenter', () => {
+          bounds = card.getBoundingClientRect();
         });
-
-        card.addEventListener('mouseleave', () => {
-          isPlaying = false;
-          if (animId) cancelAnimationFrame(animId);
+        card.addEventListener('pointermove', (e) => {
+          if (!bounds) bounds = card.getBoundingClientRect();
+          const mouseX = e.clientX - bounds.left;
+          const mouseY = e.clientY - bounds.top;
+          const xPct = mouseX / bounds.width;
+          const yPct = mouseY / bounds.height;
+          const tiltX = (0.5 - yPct) * 14;
+          const tiltY = (xPct - 0.5) * 14;
+          card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg) translateZ(14px) scale(1.02)`;
+        });
+        card.addEventListener('pointerleave', () => {
+          card.style.transform = '';
+          bounds = null;
         });
       }
 
-      // Interactive 3D Holographic Perspective Tilt on Pointer Move
-      let bounds = null;
-
-      function onPointerEnter() {
-        bounds = card.getBoundingClientRect();
-      }
-
-      function onPointerMove(e) {
-        if (!bounds) bounds = card.getBoundingClientRect();
-        const mouseX = e.clientX - bounds.left;
-        const mouseY = e.clientY - bounds.top;
-        const xPct = mouseX / bounds.width;
-        const yPct = mouseY / bounds.height;
-        
-        const tiltX = (0.5 - yPct) * 18;
-        const tiltY = (xPct - 0.5) * 18;
-
-        card.style.setProperty('--mouse-x', `${(xPct * 100).toFixed(1)}%`);
-        card.style.setProperty('--mouse-y', `${(yPct * 100).toFixed(1)}%`);
-        card.style.transform = `perspective(1100px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateZ(35px) scale(1.04)`;
-      }
-
-      function onPointerLeave() {
-        card.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)';
-        bounds = null;
-      }
-
-      card.addEventListener('pointerenter', onPointerEnter);
-      card.addEventListener('pointermove', onPointerMove);
-      card.addEventListener('pointerleave', onPointerLeave);
       card.addEventListener('click', () => openVenueModal(v.id));
-
       return card;
     }
 
-    // Populate Track 1 (repeated for seamless wrap)
+    // Populate Track 1 (3 sets = 18 cards, ~5,400px wide for seamless loop with 50% fewer DOM nodes)
     track1.innerHTML = '';
-    const track1List = [...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues, ...row1Venues];
+    const track1List = [...row1Venues, ...row1Venues, ...row1Venues];
     track1List.forEach(v => {
       track1.appendChild(createVenueCard(v));
     });
 
-    // Populate Track 2 (repeated for seamless wrap)
+    // Populate Track 2
     track2.innerHTML = '';
-    const track2List = [...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues, ...row2Venues];
+    const track2List = [...row2Venues, ...row2Venues, ...row2Venues];
     track2List.forEach(v => {
       track2.appendChild(createVenueCard(v));
     });
 
-    // Disable pure CSS animation so JS marquee & manual dragging have complete authority
+    // Disable CSS animation so JS momentum engine has exclusive, butter-smooth authority
     track1.style.animation = 'none';
     track2.style.animation = 'none';
 
-    // Dual-Mode State
+    // Position and Speed Configuration
     let pos1 = 0;
     let pos2 = 0;
-    let isDragging = false;
-    let startX = 0;
-    let autoMarqueeActive = true;
-    const marqueeSpeed1 = -0.7; // px per frame (left)
-    const marqueeSpeed2 = 0.7;  // px per frame (right)
-
     let singleSetWidth1 = 0;
     let singleSetWidth2 = 0;
 
+    let isDragging = false;
+    let isHorizontalGesture = null;
+    let autoMarqueeActive = true;
+    let extraVelocity = 0;
+
+    // Fast, luxurious auto-scroll speeds (px per frame at 60fps)
+    const baseSpeed1 = -2.2; // Leftward
+    const baseSpeed2 = 2.2;  // Rightward
+
     function measureWidths() {
       if (track1.children.length > 0) {
-        singleSetWidth1 = track1.scrollWidth / 6;
+        singleSetWidth1 = track1.scrollWidth / 3;
       }
       if (track2.children.length > 0) {
-        singleSetWidth2 = track2.scrollWidth / 6;
+        singleSetWidth2 = track2.scrollWidth / 3;
       }
       if (pos2 === 0 && singleSetWidth2 > 0) {
-        pos2 = -singleSetWidth2 * 2;
+        pos2 = -singleSetWidth2;
       }
     }
 
-    setTimeout(measureWidths, 300);
+    setTimeout(measureWidths, 200);
     window.addEventListener('resize', measureWidths);
 
-    // Continuous Animation Frame Marquee Loop
-    function marqueeLoop() {
-      if (singleSetWidth1 > 0 && singleSetWidth2 > 0) {
-        if (autoMarqueeActive && !isDragging) {
-          pos1 += marqueeSpeed1;
-          pos2 += marqueeSpeed2;
+    // Continuous Animation Frame Loop with Visibility Throttling
+    let isVenuesVisible = true;
+    let marqueeAnimId = null;
 
-          // Wrap pos1 (leftwards)
-          if (pos1 <= -singleSetWidth1 * 3) {
+    function marqueeLoop() {
+      if (!isVenuesVisible) {
+        marqueeAnimId = null;
+        return;
+      }
+
+      if (singleSetWidth1 > 0 && singleSetWidth2 > 0) {
+        if (!isDragging && autoMarqueeActive) {
+          pos1 += (baseSpeed1 + extraVelocity);
+          pos2 += (baseSpeed2 + extraVelocity);
+
+          // Silky friction decay for smooth inertia glide
+          extraVelocity *= 0.94;
+          if (Math.abs(extraVelocity) < 0.05) {
+            extraVelocity = 0;
+          }
+
+          // Seamless infinite wrap for Track 1
+          while (pos1 <= -singleSetWidth1) {
             pos1 += singleSetWidth1;
-          } else if (pos1 >= 0) {
+          }
+          while (pos1 > 0) {
             pos1 -= singleSetWidth1;
           }
 
-          // Wrap pos2 (rightwards)
-          if (pos2 >= 0) {
+          // Seamless infinite wrap for Track 2
+          while (pos2 >= 0) {
             pos2 -= singleSetWidth2;
-          } else if (pos2 <= -singleSetWidth2 * 3) {
+          }
+          while (pos2 < -singleSetWidth2) {
             pos2 += singleSetWidth2;
           }
         }
@@ -606,36 +489,103 @@ document.addEventListener('DOMContentLoaded', () => {
         track2.style.transform = `translate3d(${pos2.toFixed(2)}px, 0, 0)`;
       }
 
-      requestAnimationFrame(marqueeLoop);
+      marqueeAnimId = requestAnimationFrame(marqueeLoop);
     }
 
-    requestAnimationFrame(marqueeLoop);
+    function startMarquee() {
+      if (!marqueeAnimId && isVenuesVisible) {
+        marqueeAnimId = requestAnimationFrame(marqueeLoop);
+      }
+    }
 
-    // --- MANUAL SLIDE CONTROLS: DRAG & TOUCH SWIPE ---
+    function stopMarquee() {
+      if (marqueeAnimId) {
+        cancelAnimationFrame(marqueeAnimId);
+        marqueeAnimId = null;
+      }
+    }
+
+    // IntersectionObserver: pauses marquee RAF when off-screen to save 100% GPU/CPU
+    const venuesSection = document.getElementById('venues');
+    if (venuesSection && 'IntersectionObserver' in window) {
+      const venuesObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            isVenuesVisible = true;
+            measureWidths();
+            startMarquee();
+          } else {
+            isVenuesVisible = false;
+            stopMarquee();
+          }
+        });
+      }, { threshold: 0.05 });
+      venuesObserver.observe(venuesSection);
+    }
+
+    startMarquee();
+
+    // --- BIDIRECTIONAL TOUCH SWIPE & MOMENTUM DRAG ENGINE ---
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let dragVelocity = 0;
+
     viewport.addEventListener('pointerdown', (e) => {
-      if (e.target.closest('.venue-slide-btn') || e.target.closest('.convergence-play-badge')) return;
-      isDragging = true;
+      if (e.target.closest('.venue-slide-btn')) return;
       startX = e.clientX;
-      viewport.classList.add('is-dragging');
-      viewport.setPointerCapture(e.pointerId);
+      startY = e.clientY;
+      lastX = e.clientX;
+      lastTime = performance.now();
+      dragVelocity = 0;
+      isHorizontalGesture = null;
+      isDragging = false;
+      extraVelocity = 0; // Immediately catch/halt previous glide
     });
 
     viewport.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
       const currentX = e.clientX;
-      const diff = currentX - startX;
-      startX = currentX;
+      const currentY = e.clientY;
+      const totalDx = currentX - startX;
+      const totalDy = currentY - startY;
 
-      pos1 += diff;
-      pos2 += diff;
+      // Smart Gesture Classification: do not trap vertical page scrolling
+      if (isHorizontalGesture === null) {
+        if (Math.abs(totalDx) > 7 && Math.abs(totalDx) > Math.abs(totalDy)) {
+          isHorizontalGesture = true;
+          isDragging = true;
+          viewport.classList.add('is-dragging');
+          try {
+            viewport.setPointerCapture(e.pointerId);
+          } catch(err) {}
+        } else if (Math.abs(totalDy) > 7 && Math.abs(totalDy) > Math.abs(totalDx)) {
+          isHorizontalGesture = false; // Vertical scroll: let native touch-scroll happen smoothly!
+          return;
+        }
+      }
 
+      if (!isDragging || !isHorizontalGesture) return;
+
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      const stepDiff = currentX - lastX;
+      dragVelocity = stepDiff / dt; // Instantaneous velocity (px/ms)
+      lastX = currentX;
+      lastTime = now;
+
+      // Move tracks together with touch drag
+      pos1 += stepDiff;
+      pos2 += stepDiff;
+
+      // Wrap during drag so track never empties
       if (singleSetWidth1 > 0) {
-        if (pos1 <= -singleSetWidth1 * 3) pos1 += singleSetWidth1;
-        if (pos1 >= 0) pos1 -= singleSetWidth1;
+        while (pos1 <= -singleSetWidth1) pos1 += singleSetWidth1;
+        while (pos1 > 0) pos1 -= singleSetWidth1;
       }
       if (singleSetWidth2 > 0) {
-        if (pos2 >= 0) pos2 -= singleSetWidth2;
-        if (pos2 <= -singleSetWidth2 * 3) pos2 += singleSetWidth2;
+        while (pos2 >= 0) pos2 -= singleSetWidth2;
+        while (pos2 < -singleSetWidth2) pos2 += singleSetWidth2;
       }
 
       track1.style.transform = `translate3d(${pos1.toFixed(2)}px, 0, 0)`;
@@ -643,64 +593,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function endDrag(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      viewport.classList.remove('is-dragging');
-      try {
-        if (e && e.pointerId) viewport.releasePointerCapture(e.pointerId);
-      } catch(err) {}
+      if (isDragging) {
+        isDragging = false;
+        viewport.classList.remove('is-dragging');
+        try {
+          if (e && e.pointerId) viewport.releasePointerCapture(e.pointerId);
+        } catch(err) {}
+
+        // Fling momentum in either direction (right-to-left or left-to-right)
+        const fling = dragVelocity * 16 * 1.3;
+        extraVelocity = Math.max(-28, Math.min(28, fling));
+      }
+      isHorizontalGesture = null;
     }
 
     viewport.addEventListener('pointerup', endDrag);
     viewport.addEventListener('pointercancel', endDrag);
 
     // --- MANUAL SLIDER ARROW BUTTONS (< and >) ---
-    function smoothNudge(amount) {
-      const startTime = performance.now();
-      const startPos1 = pos1;
-      const startPos2 = pos2;
-      const duration = 420;
-
-      function step(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(1, elapsed / duration);
-        const ease = 1 - Math.pow(1 - progress, 3);
-
-        pos1 = startPos1 + (amount * ease);
-        pos2 = startPos2 + (amount * ease);
-
-        if (singleSetWidth1 > 0) {
-          if (pos1 <= -singleSetWidth1 * 3) pos1 += singleSetWidth1;
-          if (pos1 >= 0) pos1 -= singleSetWidth1;
-        }
-        if (singleSetWidth2 > 0) {
-          if (pos2 >= 0) pos2 -= singleSetWidth2;
-          if (pos2 <= -singleSetWidth2 * 3) pos2 += singleSetWidth2;
-        }
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      }
-      requestAnimationFrame(step);
-    }
-
     if (prevBtn) {
       prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        smoothNudge(380);
+        extraVelocity = 22; // Smooth high-speed fling to the right
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        smoothNudge(-380);
+        extraVelocity = -22; // Smooth high-speed fling to the left
       });
     }
 
-    viewport.addEventListener('mouseenter', () => { autoMarqueeActive = false; });
-    viewport.addEventListener('mouseleave', () => { if (!isDragging) autoMarqueeActive = true; });
+    // Hover pause only on desktop with mouse pointer (never traps mobile touch)
+    viewport.addEventListener('mouseenter', () => {
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        autoMarqueeActive = false;
+      }
+    });
+
+    viewport.addEventListener('mouseleave', () => {
+      if (!isDragging) {
+        autoMarqueeActive = true;
+      }
+    });
   }
 
   initVenue3DMarquee();
@@ -1288,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalBody.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 24px;">
-        <div style="position: relative; border-radius: 12px; overflow: hidden; height: 380px; background: #000;">
+        <div class="modal-media-wrap" style="position: relative; border-radius: 12px; overflow: hidden; height: 380px; background: #000;">
           ${v.framesFolder ? `
             <canvas id="modalVenueCanvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
             <div id="modalLoadingBadge" style="position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.6); color: #EAD09D; padding: 6px 14px; border-radius: 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; border: 1px solid rgba(212,175,55,0.3); z-index: 5;">
@@ -1315,7 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p style="font-size: 14.5px; line-height: 1.75; color: var(--text-body);">${v.fullDesc}</p>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 14px; margin-top: 10px; border-top: 1px solid var(--border-cream); padding-top: 20px;">
+        <div class="modal-footer-actions" style="display: flex; justify-content: flex-end; gap: 14px; margin-top: 10px; border-top: 1px solid var(--border-cream); padding-top: 20px;">
           <button onclick="document.getElementById('luxuryModal').classList.remove('active')" class="btn-pkg-select">Close</button>
           <a href="#inquiry" onclick="document.getElementById('luxuryModal').classList.remove('active'); document.getElementById('venueLocation').value = '${v.name}, ${v.location}';" class="btn-luxury-solid">Inquire For This Setup</a>
         </div>
@@ -1370,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     modalBody.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 24px;">
-        <div style="position: relative; border-radius: 12px; overflow: hidden; height: 420px; background: #000;">
+        <div class="modal-media-wrap" style="position: relative; border-radius: 12px; overflow: hidden; height: 420px; background: #000;">
           ${item.framesFolder ? `
             <canvas id="modalVideoCanvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
             <div id="modalLoadingBadge" style="position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.6); color: #EAD09D; padding: 6px 14px; border-radius: 20px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; border: 1px solid rgba(212,175,55,0.3); z-index: 5;">
@@ -1398,7 +1334,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span style="font-size: 13.5px; color: var(--text-body);">${item.gear}</span>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-cream); padding-top: 20px;">
+        <div class="modal-footer-actions" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-cream); padding-top: 20px;">
           <span style="font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-lock gold-icon"></i> Full 800+ photo archive available on request</span>
           <a href="#inquiry" onclick="document.getElementById('luxuryModal').classList.remove('active');" class="btn-luxury-solid">Inquire Similar Style</a>
         </div>
@@ -1696,12 +1632,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let isStoriesVisible = true;
+
   function startReviewAutoTimer() {
     stopReviewAutoTimer();
+    if (!isStoriesVisible) return;
     reviewAutoTimer = setInterval(() => {
       currentReviewIdx = (currentReviewIdx + 1) % reviewsData.length;
       renderReviews();
-    }, 2000); // changes automatically every 2 seconds
+    }, 2500); // changes automatically every 2.5 seconds
   }
 
   function stopReviewAutoTimer() {
@@ -1728,6 +1667,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderReviews();
+
+  // Pause timer when #stories section is offscreen
+  const storiesSection = document.getElementById('stories');
+  if (storiesSection && 'IntersectionObserver' in window) {
+    const storiesObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          isStoriesVisible = true;
+          startReviewAutoTimer();
+        } else {
+          isStoriesVisible = false;
+          stopReviewAutoTimer();
+        }
+      });
+    }, { threshold: 0.05 });
+    storiesObserver.observe(storiesSection);
+  }
+
   startReviewAutoTimer();
 
   // Pause timer on hover so user can comfortably read, resume when mouse leaves
@@ -1874,37 +1831,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================================================
-     10. MOBILE NAVIGATION DRAWER
+     10. LUXURY RESPONSIVE MOBILE NAVIGATION DRAWER
      ========================================================================== */
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
 
   if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
+    function closeMobileNav() {
+      navLinks.classList.remove('nav-open');
+      menuToggle.classList.remove('is-active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      const icon = menuToggle.querySelector('i');
+      if (icon) {
+        icon.className = 'fa-solid fa-bars-staggered';
+      }
+    }
+
+    function openMobileNav() {
+      navLinks.classList.add('nav-open');
+      menuToggle.classList.add('is-active');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      const icon = menuToggle.querySelector('i');
+      if (icon) {
+        icon.className = 'fa-solid fa-xmark';
+      }
+    }
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navLinks.classList.contains('nav-open');
+      if (isOpen) {
+        closeMobileNav();
       } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '78px';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.background = 'var(--bg-card)';
-        navLinks.style.padding = '24px';
-        navLinks.style.boxShadow = 'var(--shadow-card)';
-        navLinks.style.borderBottom = '1px solid var(--border-gold)';
+        openMobileNav();
       }
     });
 
-    // Close mobile menu on link click
-    document.querySelectorAll('.nav-link').forEach(l => {
-      l.addEventListener('click', () => {
-        if (window.innerWidth <= 1024 && navLinks.style.display === 'flex') {
-          navLinks.style.display = 'none';
+    // Close mobile menu on nav link click
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 1024) {
+          closeMobileNav();
         }
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+        if (navLinks.classList.contains('nav-open')) {
+          closeMobileNav();
+        }
+      }
+    });
+
+    // Close on Escape key press
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('nav-open')) {
+        closeMobileNav();
+      }
+    });
+
+    // Automatically close mobile menu and clean state when resizing to desktop (> 1024px)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024 && navLinks.classList.contains('nav-open')) {
+        closeMobileNav();
+      }
+    });
+  }
+
+
+  /* ==========================================================================
+     11. SILKY-SMOOTH BACK TO TOP SCROLL
+     ========================================================================== */
+  const backToTopBtn = document.querySelector('.footer-back-to-top');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
     });
   }
 
 });
+

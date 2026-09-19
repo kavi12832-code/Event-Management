@@ -59,9 +59,10 @@
 
   <!-- ================= HERO SECTION (CURSOR-SCRUBBED VIDEO CANVAS) ================= -->
   <section class="hero-section" id="hero">
-    <!-- Interactive Canvas Background -->
+    <!-- Interactive Background (Hardware-Accelerated Cinematic Video) -->
     <div class="hero-canvas-wrapper" id="heroCanvasWrapper">
-      <canvas id="videoCanvas" width="1920" height="1080"></canvas>
+      <video id="heroVideo" src="assets/videos/home-wedding-video.mp4" autoplay muted loop playsinline preload="auto" poster="assets/frames/hero/ezgif-frame-001.jpg"></video>
+      <canvas id="videoCanvas" width="1920" height="1080" style="display: none;"></canvas>
       <div class="canvas-grain-overlay"></div>
       <div class="canvas-vignette-overlay"></div>
       
