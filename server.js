@@ -54,6 +54,7 @@ const server = http.createServer((req, res) => {
       const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
       const chunksize = (end - start) + 1;
       const file = fs.createReadStream(filePath, { start, end });
+
       res.writeHead(206, {
         'Content-Range': `bytes ${start}-${end}/${stats.size}`,
         'Accept-Ranges': 'bytes',
@@ -61,7 +62,14 @@ const server = http.createServer((req, res) => {
         'Content-Type': contentType,
         'Access-Control-Allow-Origin': '*'
       });
+
       file.pipe(res);
+      res.on('close', () => file.destroy());
+      file.on('error', () => {
+        file.destroy();
+        if (!res.headersSent) res.writeHead(500);
+        res.end();
+      });
       return;
     }
 
@@ -82,6 +90,12 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, headers);
     const stream = fs.createReadStream(filePath);
     stream.pipe(res);
+    res.on('close', () => stream.destroy());
+    stream.on('error', () => {
+      stream.destroy();
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
+    });
   });
 });
 

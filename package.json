@@ -4,8 +4,8 @@
   "description": "BIZEVENTS Atelier — Luxury Event Management & Wedding Cinema Website with Interactive Canvas and Scroll Convergence Animation",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node --max-old-space-size=4096 server.js",
+    "dev": "node --max-old-space-size=4096 server.js"
   },
   "keywords": [
     "event-management",
