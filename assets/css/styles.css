@@ -3,42 +3,51 @@
    ========================================================================== */
 
 :root {
-  /* Cream & Bone Palette */
-  --bg-cream: #FAF7F2;
-  --bg-bone: #F3ECE0;
-  --bg-card: #FDFBF8;
+  /* Exact Lalithaa Royal Cream & Ivory Canvas */
+  --bg-cream: #FAF1DF;           /* Warm royal cream background matching the reference */
+  --bg-bone: #F5EBCE;            /* Deeper warm ivory tone */
+  --bg-card: #FFFFFF;            /* Pure white for capsule collection cards */
   --bg-paper: #FFFFFF;
-  --bg-dark-accent: #191614;
+  --bg-dark-accent: #2C1712;     /* Rich chocolate mahogany from hero banner */
+  --bg-mahogany: #2C1712;        /* Hero banner rich mahogany */
+  --bg-ruby: #3D1016;            /* Ruby & Emerald banner deep crimson */
+  --bg-navy-dark: #07152B;       /* Royal Midnight Navy for footer */
+  --bg-navy-darker: #040D1B;     /* Deepest midnight for copyright bar */
   
-  /* Champagne & Gold Accents */
-  --gold-primary: #C5A880;
-  --gold-vivid: #D4AF37;
-  --gold-deep: #8E7043;
-  --gold-light: #F2E9DD;
-  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #C5A880 50%, #9E7D4B 100%);
-  --gold-shimmer: linear-gradient(90deg, #C5A880 0%, #FFF2D1 50%, #C5A880 100%);
+  /* Royal Lalithaa Gold Accents */
+  --gold-primary: #DFC176;       /* Polished warm champagne gold from "ELEGANCE IN EVERY ELEMENT" */
+  --gold-vivid: #D4AF37;         /* Radiant rich gold */
+  --gold-deep: #C5A059;          /* Deep antique gold */
+  --gold-light: #FBF4E4;
+  --gold-gradient: linear-gradient(135deg, #DFC176 0%, #C5A059 50%, #9E7D4B 100%);
+  --gold-shimmer: linear-gradient(90deg, #DFC176 0%, #FFF4D9 50%, #DFC176 100%);
   
-  /* Ink & Typography */
-  --text-ink: #1C1917;
-  --text-body: #453F36;
-  --text-muted: #736B5E;
-  --text-subtle: #9E9484;
-  --text-gold: #967645;
+  /* Typography Colors - Exact Match to Reference */
+  --text-ink: #0C2340;           /* Deep Royal Navy for headings ("OUR COLLECTIONS", category titles) */
+  --text-navy: #0C2340;          /* Brand royal navy */
+  --text-body: #4A5568;          /* Elegant neutral dark slate for descriptions */
+  --text-muted: #6B7280;         /* Muted slate */
+  --text-subtle: #8C8476;
+  --text-gold: #C5A059;          /* Warm gold text */
+  --text-gold-light: #DFC176;
+  --text-hero-sub: #EFE3CE;      /* Warm sand ivory for hero subtitle */
   
-  /* Hairline Borders */
-  --border-cream: #E8E0D2;
-  --border-gold: #D6C4A6;
+  /* Borders & Dividers */
+  --border-cream: #EFE4D0;       /* Fine warm hairline border for cards & sections */
+  --border-gold: #DFC176;        /* Golden accent border */
   --border-gold-glow: rgba(212, 175, 55, 0.4);
+  --border-navy: rgba(12, 35, 64, 0.15);
   
-  /* Shadows & Elevations */
-  --shadow-subtle: 0 4px 20px rgba(40, 32, 22, 0.04);
-  --shadow-card: 0 12px 36px rgba(40, 32, 22, 0.07);
-  --shadow-luxury: 0 25px 60px rgba(35, 27, 18, 0.12);
-  --shadow-gold: 0 10px 30px rgba(197, 168, 128, 0.25);
+  /* Soft Luxury Elevations */
+  --shadow-subtle: 0 4px 18px rgba(12, 35, 64, 0.04);
+  --shadow-card: 0 8px 26px rgba(12, 35, 64, 0.06);
+  --shadow-luxury: 0 20px 50px rgba(12, 35, 64, 0.10);
+  --shadow-gold: 0 10px 30px rgba(223, 193, 118, 0.30);
   
   /* Typography Scale */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -305,16 +314,15 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   TOP ANNOUNCEMENT BAR
+   TOP UTILITY ANNOUNCEMENT BAR (LALITHAA THEME)
    ========================================================================== */
 .top-announcement-bar {
-  background-color: #171412;
-  color: #E2DACD;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  font-family: var(--font-mono);
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+  background-color: var(--bg-cream);
+  color: var(--text-ink);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-cream);
   position: relative;
   z-index: 100;
 }
@@ -324,85 +332,122 @@ button, input, select, textarea {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-}
-
-.announcement-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  background-color: var(--gold-vivid);
-  border-radius: 50%;
-  display: inline-block;
-  box-shadow: 0 0 10px var(--gold-vivid);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.95); opacity: 0.7; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.7; }
-}
-
-.gold-shimmer-text {
-  color: #EAD09D;
-  font-weight: 600;
-}
-
-.sep {
-  opacity: 0.4;
-}
-
-.announcement-controls {
-  display: flex;
-  align-items: center;
   gap: 16px;
 }
 
-.currency-selector {
+.search-and-rates {
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: #A9A092;
+  gap: 12px;
 }
 
-.currency-selector select {
-  background: transparent;
+.search-box-pill {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #D8CEBC;
+  border-radius: 25px;
+  padding: 3px 6px 3px 14px;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(12, 35, 64, 0.04);
+}
+
+.search-box-pill input {
   border: none;
-  color: #E2DACD;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  cursor: pointer;
+  background: transparent;
+  font-size: 12px;
+  color: var(--text-ink);
+  width: 140px;
+  outline: none;
+  font-family: var(--font-sans);
 }
 
-.currency-selector select option {
-  background: #231F1C;
-  color: #FAF7F2;
+.search-box-pill input::placeholder {
+  color: #8C8476;
 }
 
-.sound-pill-btn {
-  background: rgba(197, 168, 128, 0.15);
-  border: 1px solid rgba(197, 168, 128, 0.35);
-  color: #EAD09D;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 10px;
-  letter-spacing: 0.08em;
+.search-box-pill .search-btn {
+  background: var(--text-ink);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  font-size: 11px;
   cursor: pointer;
   transition: var(--transition-smooth);
 }
 
-.sound-pill-btn:hover {
-  background: rgba(197, 168, 128, 0.3);
-  color: #FFFFFF;
+.search-box-pill .search-btn:hover {
+  background: var(--gold-deep);
+}
+
+.gold-rate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #FFFFFF;
+  border: 1px solid #DFC176;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-ink);
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(12, 35, 64, 0.04);
+  transition: var(--transition-smooth);
+}
+
+.gold-rate-pill:hover {
+  border-color: var(--text-ink);
+  color: var(--text-ink);
+  transform: translateY(-1px);
+}
+
+.gold-coin-icon {
+  color: #D4AF37;
+}
+
+.brand-center-badge .lalithaa-cursive-logo {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-ink);
+  display: inline-block;
+  text-transform: none;
+}
+
+.top-utility-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.top-util-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-ink);
+  transition: var(--transition-smooth);
+}
+
+.top-util-link i {
+  font-size: 12px;
+  color: var(--text-ink);
+}
+
+.top-util-link:hover {
+  color: #E63946 !important;
+}
+
+.top-util-link:hover i {
+  color: #E63946 !important;
 }
 
 /* ==========================================================================
@@ -414,7 +459,7 @@ button, input, select, textarea {
   left: 0;
   width: 100%;
   z-index: 90;
-  background: rgba(250, 247, 242, 0.92);
+  background: rgba(250, 241, 223, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-cream);
@@ -425,7 +470,7 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 78px;
+  height: 68px;
 }
 
 .brand-logo {
@@ -611,6 +656,219 @@ body.dark-theme .theme-icon-btn:hover {
   box-shadow: var(--shadow-gold);
 }
 
+/* Lalithaa Craftsmanship Pill Button */
+.btn-craftsmanship-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0A1C3E;
+  color: #FFFFFF;
+  padding: 7px 18px;
+  border-radius: 40px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(223, 193, 118, 0.4);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(10, 28, 62, 0.25);
+  text-decoration: none;
+}
+
+.btn-craftsmanship-pill:hover {
+  background: #122B5C;
+  border-color: var(--gold-vivid);
+  box-shadow: 0 4px 18px rgba(10, 28, 62, 0.45);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.btn-craftsmanship-pill i {
+  color: #DFC176;
+}
+
+/* ==========================================================================
+   OUR COLLECTIONS (LALITHAA CAPSULE PILL GRID)
+   ========================================================================== */
+.section-collections-capsules {
+  background-color: var(--bg-cream);
+  padding: 70px 0 50px 0;
+  position: relative;
+  border-bottom: 1px solid var(--border-cream);
+}
+
+.capsules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+@media (max-width: 992px) {
+  .capsules-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .capsules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.capsule-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-cream);
+  border-radius: 50px;
+  padding: 16px 24px;
+  box-shadow: 0 6px 20px rgba(12, 35, 64, 0.04);
+  transition: var(--transition-smooth);
+}
+
+.capsule-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(12, 35, 64, 0.08);
+  border-color: var(--gold-primary);
+}
+
+.capsule-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(223, 193, 118, 0.15);
+  border: 1px solid rgba(223, 193, 118, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+  transition: var(--transition-smooth);
+}
+
+.capsule-card:hover .capsule-icon-wrap {
+  background: rgba(223, 193, 118, 0.3);
+  transform: rotate(10deg);
+}
+
+.gold-gem-icon {
+  color: var(--gold-deep);
+}
+
+.capsule-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.capsule-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-ink);
+  margin-bottom: 2px;
+  letter-spacing: 0.02em;
+}
+
+.capsule-desc {
+  font-size: 12.5px;
+  color: var(--text-body);
+  line-height: 1.45;
+}
+
+body.dark-theme .capsule-card {
+  background: #161310;
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .capsule-title {
+  color: #FAF7F2;
+}
+
+body.dark-theme .capsule-desc {
+  color: #A39B8E;
+}
+
+/* ==========================================================================
+   THE LATEST IN LUXURY: RUBY AND EMERALD BANNER
+   ========================================================================== */
+.section-ruby-emerald {
+  background: linear-gradient(135deg, #3D1016 0%, #290A0E 100%);
+  padding: 75px 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(223, 193, 118, 0.3);
+  border-bottom: 1px solid rgba(223, 193, 118, 0.3);
+}
+
+.section-ruby-emerald::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(223, 193, 118, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ruby-emerald-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.ruby-content {
+  max-width: 680px;
+}
+
+.ruby-sub-badge {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--gold-primary);
+  display: inline-block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.ruby-title {
+  font-size: clamp(26px, 3.4vw, 44px);
+  font-weight: 700;
+  color: var(--gold-primary);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.ruby-desc {
+  font-size: 15px;
+  color: #EFE3CE;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.btn-ruby-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #DFC176 0%, #C5A059 100%);
+  color: #1A0B0E;
+  padding: 11px 26px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: var(--transition-smooth);
+}
+
+.btn-ruby-gold:hover {
+  box-shadow: 0 8px 24px rgba(223, 193, 118, 0.4);
+  transform: translateY(-2px);
+  color: #0A0405;
+}
+
 .mobile-menu-toggle {
   display: none;
   background: transparent;
@@ -632,7 +890,7 @@ body.dark-theme .theme-icon-btn:hover {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background: #110E0C;
+  background: #2C1712;
   color: #FAF7F2;
 }
 
@@ -787,24 +1045,26 @@ body.dark-theme .theme-icon-btn:hover {
 }
 
 .hero-headline {
-  font-family: var(--font-serif);
-  font-size: clamp(38px, 6vw, 76px);
-  font-weight: 400;
-  line-height: 1.08;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.8vw, 64px);
+  font-weight: 700;
+  line-height: 1.16;
   max-width: 980px;
   margin-bottom: 20px;
-  letter-spacing: -0.01em;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
 }
 
 .hero-subheading {
   font-size: clamp(15px, 1.8vw, 18px);
-  color: #E2DAD0;
-  max-width: 680px;
+  color: var(--text-hero-sub, #EFE3CE);
+  max-width: 740px;
   margin-bottom: 36px;
-  font-weight: 300;
-  line-height: 1.7;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+  font-weight: 400;
+  line-height: 1.75;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
 }
 
 .hero-cta-row {
@@ -2252,10 +2512,10 @@ body.dark-theme .theme-icon-btn:hover {
    FOOTER (ENHANCED LUXURY ANIMATIONS)
    ========================================================================== */
 .main-footer {
-  background-color: #0E0C0A;
+  background-color: var(--bg-navy-dark, #07152B);
   color: #FAF7F2;
-  padding: 95px 0 36px 0;
-  border-top: 1px solid rgba(197, 168, 128, 0.2);
+  padding: 95px 0 0 0;
+  border-top: 1px solid rgba(223, 193, 118, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -2405,11 +2665,25 @@ body.dark-theme .theme-icon-btn:hover {
 }
 
 .footer-links-col h4, .footer-newsletter-col h4 {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: #EAD09D;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
   margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-links-col h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--gold-primary);
+  border-radius: 2px;
 }
 
 .footer-links-col ul {
@@ -2419,10 +2693,65 @@ body.dark-theme .theme-icon-btn:hover {
   gap: 12px;
 }
 
-/* 6. Animated Footer Navigation Links with Slide & Red Glow */
+/* App Download Badges */
+.app-download-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.app-store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #040D1B;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9px;
+  padding: 8px 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  width: fit-content;
+  transition: var(--transition-smooth);
+}
+
+.app-store-btn:hover {
+  border-color: var(--gold-primary);
+  background: #0C1E38;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.app-store-btn i {
+  font-size: 24px;
+  color: #FFFFFF;
+}
+
+.btn-text-block {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.btn-small-txt {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.btn-bold-txt {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.25;
+}
+
+/* Animated Footer Navigation Links */
 .footer-links-col a {
   font-size: 13.5px;
-  color: #A39B8E;
+  color: #CBD5E1;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -2443,84 +2772,15 @@ body.dark-theme .theme-icon-btn:hover {
 }
 
 .footer-links-col a:hover {
-  color: #FFFFFF !important;
-  transform: translateX(14px);
-  text-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+  color: var(--gold-primary) !important;
+  transform: translateX(10px);
+  text-shadow: 0 0 10px rgba(223, 193, 118, 0.4);
 }
 
 .footer-links-col a:hover::before {
   opacity: 1;
   left: -10px;
-  color: #E63946;
-}
-
-.footer-newsletter-col p {
-  font-size: 13px;
-  color: #A39B8E;
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-
-/* 7. Animated Newsletter Form */
-.footer-newsletter-form {
-  display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(197, 168, 128, 0.25);
-  border-radius: 35px;
-  padding: 5px;
-  position: relative;
-  transition: all 0.35s ease;
-}
-
-.footer-newsletter-form:hover {
-  border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.footer-newsletter-form:focus-within {
-  border-color: #E63946;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 24px rgba(230, 57, 70, 0.38), 0 0 8px rgba(212, 175, 55, 0.2);
-}
-
-.footer-newsletter-form input {
-  background: transparent;
-  border: none;
-  padding: 10px 18px;
-  font-size: 13.5px;
-  color: #FAF7F2;
-  flex: 1;
-}
-
-.footer-newsletter-form button {
-  background: linear-gradient(135deg, var(--gold-deep), var(--gold-vivid));
-  border: none;
-  color: #171412;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.footer-newsletter-form button:hover {
-  background: linear-gradient(135deg, #E63946, #FF4D6D);
-  color: #FFFFFF;
-  transform: scale(1.14);
-  box-shadow: 0 0 20px rgba(230, 57, 70, 0.65);
-}
-
-.footer-newsletter-form button:hover i {
-  animation: footerArrowSlide 0.6s ease infinite alternate;
-}
-
-@keyframes footerArrowSlide {
-  from { transform: translateX(0); }
-  to { transform: translateX(4px); }
+  color: var(--gold-primary);
 }
 
 .footer-bottom {
@@ -2529,53 +2789,82 @@ body.dark-theme .theme-icon-btn:hover {
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
-  padding-top: 30px;
-  font-size: 12px;
-  color: #7A7265;
+  padding: 24px 0 28px 0;
+  font-size: 12.5px;
+  color: #8899B0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 40px;
 }
 
-.footer-sub-links {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.footer-sub-links a:hover {
-  color: #E63946;
-}
-
-/* 8. Back to Top Animated Floating Button */
+/* Back to Top Floating Button */
 .footer-back-to-top {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: #A39B8E;
-  font-size: 11.5px;
-  font-family: var(--font-mono);
-  letter-spacing: 0.1em;
-  padding: 7px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  justify-content: center;
+  color: #CBD5E1;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
 .footer-back-to-top:hover {
   color: #FFFFFF;
-  border-color: #E63946;
-  background: rgba(230, 57, 70, 0.18);
-  box-shadow: 0 0 18px rgba(230, 57, 70, 0.4);
+  border-color: var(--gold-primary);
+  background: #0C1E38;
+  box-shadow: 0 0 16px rgba(223, 193, 118, 0.4);
   transform: translateY(-3px);
 }
 
-.footer-back-to-top:hover i {
-  color: #FF4D6D;
-  animation: arrowUpBounce 0.5s ease infinite alternate;
+/* Floating Contact Action Buttons (Phone & WhatsApp) */
+.floating-contact-actions {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
 }
 
-@keyframes arrowUpBounce {
-  from { transform: translateY(0); }
-  to { transform: translateY(-3px); }
+.floating-action-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: var(--transition-smooth);
+}
+
+.floating-action-btn:hover {
+  transform: scale(1.12);
+}
+
+.floating-call-btn {
+  background: #0C2340;
+  border: 1px solid rgba(223, 193, 118, 0.45);
+}
+
+.floating-call-btn:hover {
+  background: #143663;
+  box-shadow: 0 8px 24px rgba(12, 35, 64, 0.5);
+}
+
+.floating-whatsapp-btn {
+  background: #25D366;
+}
+
+.floating-whatsapp-btn:hover {
+  background: #1EBE5D;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
 }
 
 /* ==========================================================================

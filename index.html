@@ -6,10 +6,10 @@
   <title>BIZEVENTS — Fine Art Wedding Photography & Videography</title>
   <meta name="description" content="Editorial wedding photography & cinematic films for discerning couples worldwide. Inspired by timeless romance, destination estates, and fine art storytelling." />
   
-  <!-- Fonts: Cormorant Garamond, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
+  <!-- Fonts: Cinzel, Cormorant Garamond, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -19,36 +19,59 @@
 </head>
 <body class="luxury-theme">
 
+  <!-- ================= TOP UTILITY ANNOUNCEMENT BAR (LALITHAA THEME) ================= -->
+  <div class="top-announcement-bar">
+    <div class="container bar-inner">
+      <div class="search-and-rates">
+        <div class="search-box-pill">
+          <input type="text" placeholder="Type to search.." />
+          <button type="button" aria-label="Search" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <a href="#investment" class="gold-rate-pill">
+          <i class="fa-solid fa-coins gold-coin-icon"></i>
+          <span>Today's Gold Rate</span>
+        </a>
+      </div>
+
+      <div class="brand-center-badge">
+        <span class="lalithaa-cursive-logo">Lalithaa</span>
+      </div>
+
+      <div class="top-utility-links">
+        <a href="#venues" class="top-util-link"><i class="fa-solid fa-store"></i> <span>Stores</span></a>
+        <a href="#investment" class="top-util-link"><i class="fa-solid fa-calendar-check"></i> <span>Schemes</span></a>
+        <a href="#investment" class="top-util-link"><i class="fa-solid fa-indian-rupee-sign"></i> <span>Investor Corner</span></a>
+        <a href="#inquiry" class="top-util-link"><i class="fa-regular fa-envelope"></i> <span>Contact us</span></a>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= STICKY MAIN NAVIGATION ================= -->
   <nav class="main-navbar" id="mainNavbar">
     <div class="container nav-container">
-      <a href="#hero" class="brand-logo">
-        <span class="brand-monogram">B</span>
-        <div class="brand-text-group">
-          <span class="brand-title">BIZEVENTS</span>
-          <span class="brand-subtitle">CINEMA & PHOTOGRAPHY</span>
-        </div>
-      </a>
-
       <div class="nav-links" id="navLinks">
-        <a href="#hero" class="nav-link active">Home</a>
-        <a href="#venues" class="nav-link">Venues & Destinations</a>
-        <a href="#convergence" class="nav-link">Convergence</a>
-        <a href="#portfolio" class="nav-link">Films & Stills</a>
-        <a href="#artistry" class="nav-link">Our Artistry</a>
-        <a href="#investment" class="nav-link">Collections</a>
-        <a href="#stories" class="nav-link">Love Stories</a>
+        <a href="#hero" class="nav-link nav-home-link active" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+        <a href="#collections" class="nav-link">Gold</a>
+        <a href="#venues" class="nav-link">Silver</a>
+        <a href="#convergence" class="nav-link">Diamond</a>
+        <a href="#portfolio" class="nav-link">Platinum</a>
+        <a href="#investment" class="nav-link">Coins</a>
+        <a href="#stories" class="nav-link">Kids</a>
+        <a href="#artistry" class="nav-link">Men</a>
+        <a href="#stories" class="nav-link">Teenagers</a>
+        <a href="#inquiry" class="nav-link">Personalised Engraving</a>
+        <a href="#investment" class="nav-link">Gifts</a>
       </div>
 
       <div class="nav-actions">
-        <!-- Luxury Dark Theme Switcher (Icon Only) -->
+        <!-- Theme Switcher (Icon Only) -->
         <button id="themeToggleBtn" class="theme-icon-btn" aria-label="Toggle Dark or Light Luxury Theme" title="Toggle Theme">
           <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
 
-        <a href="#inquiry" class="btn-gold-pill">
-          <span>Inquire Date</span>
-          <i class="fa-solid fa-arrow-right-long"></i>
+        <a href="#artistry" class="btn-craftsmanship-pill">
+          <i class="fa-solid fa-gem"></i>
+          <span>Craftsmanship</span>
         </a>
         <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
           <i class="fa-solid fa-bars-staggered"></i>
@@ -87,23 +110,119 @@
         </div>
 
         <h1 class="hero-headline">
-          Capturing the <span class="font-italic-serif gold-gradient-text">Poetry</span> of Your <span class="font-serif gold-gradient-text">Eternal</span> Day.
+          ELEGANCE IN EVERY ELEMENT,<br />
+          <span class="font-serif gold-gradient-text">BEAUTY IN EVERY MOMENT</span>
         </h1>
 
         <p class="hero-subheading">
-          Where timeless elegance meets editorial motion. We document genuine moments, atmospheric light, and grand love stories across the world's most romantic destination estates.
+          Where beauty begins with a smile, shines through every detail, and lives on in every precious moment.
         </p>
 
         <div class="hero-cta-row">
-          <a href="#inquiry" class="btn-luxury-solid">
-            <span>Reserve Your Date</span>
-            <i class="fa-solid fa-calendar-check"></i>
+          <a href="#collections" class="btn-luxury-solid">
+            <span>Explore Collections</span>
+            <i class="fa-solid fa-gem"></i>
           </a>
           <a href="#portfolio" class="btn-luxury-outline">
             <i class="fa-solid fa-film"></i>
             <span>Watch Full Films</span>
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= OUR COLLECTIONS (LALITHAA THEME CAPSULE GRID) ================= -->
+  <section class="section-collections-capsules" id="collections">
+    <div class="container">
+      <div class="section-header-editorial scroll-join-center">
+        <h2 class="section-title">OUR COLLECTIONS</h2>
+        <p class="section-desc">Explore a range of jewellery across categories.</p>
+      </div>
+
+      <div class="capsules-grid">
+        <!-- Capsule 1: Chains -->
+        <div class="capsule-card scroll-join-left">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-link gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Chains</h3>
+            <p class="capsule-desc">Classic and timeless chains for every occasion.</p>
+          </div>
+        </div>
+
+        <!-- Capsule 2: Rings -->
+        <div class="capsule-card scroll-join-right">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-ring gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Rings</h3>
+            <p class="capsule-desc">Elegant gold rings crafted to symbolize beauty, love, and everyday luxury.</p>
+          </div>
+        </div>
+
+        <!-- Capsule 3: Bangles -->
+        <div class="capsule-card scroll-join-left">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-circle-notch gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Bangles</h3>
+            <p class="capsule-desc">Elegant bangles for a timeless look.</p>
+          </div>
+        </div>
+
+        <!-- Capsule 4: Necklaces -->
+        <div class="capsule-card scroll-join-right">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-gem gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Necklaces</h3>
+            <p class="capsule-desc">Beautiful necklaces that add charm to any outfit.</p>
+          </div>
+        </div>
+
+        <!-- Capsule 5: Haarams -->
+        <div class="capsule-card scroll-join-left">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-crown gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Haarams</h3>
+            <p class="capsule-desc">Exquisite Haaram sets that captivate every gaze.</p>
+          </div>
+        </div>
+
+        <!-- Capsule 6: Drops -->
+        <div class="capsule-card scroll-join-right">
+          <div class="capsule-icon-wrap">
+            <i class="fa-solid fa-wand-magic-sparkles gold-gem-icon"></i>
+          </div>
+          <div class="capsule-info">
+            <h3 class="capsule-title">Drops</h3>
+            <p class="capsule-desc">Traditional drops for a festive touch.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= THE LATEST IN LUXURY: RUBY AND EMERALD COLLECTIONS ================= -->
+  <section class="section-ruby-emerald scroll-join-center" id="ruby-emerald">
+    <div class="container ruby-emerald-inner">
+      <div class="ruby-content scroll-join-left">
+        <span class="ruby-sub-badge">THE LATEST IN LUXURY</span>
+        <h2 class="ruby-title font-serif">RUBY AND EMERALD COLLECTIONS</h2>
+        <p class="ruby-desc">Explore jewellery designs featuring ruby and emerald.</p>
+        <a href="#inquiry" class="btn-ruby-gold">
+          <span>Explore Collection</span>
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -679,70 +798,87 @@
   </section>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- ================= FOOTER (LALITHAA ROYAL THEME) ================= -->
   <footer class="main-footer">
     <div class="container footer-inner">
       <div class="footer-top">
-        <div class="footer-brand-block">
-          <div class="brand-monogram large">B</div>
-          <span class="footer-brand-title">BIZEVENTS ATELIER</span>
-          <p class="footer-tagline">Fine art wedding photography and timeless cinematography for celebrations worldwide.</p>
-          <div class="footer-socials">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://vimeo.com" target="_blank" rel="noreferrer" aria-label="Vimeo"><i class="fa-brands fa-vimeo-v"></i></a>
-            <a href="https://pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <!-- Col 1: Download our App -->
+        <div class="footer-links-col">
+          <h4>Download our App</h4>
+          <div class="app-download-badges">
+            <a href="#" class="app-store-btn" aria-label="Get it on Google Play">
+              <i class="fa-brands fa-google-play"></i>
+              <div class="btn-text-block">
+                <span class="btn-small-txt">GET IT ON</span>
+                <span class="btn-bold-txt">Google Play</span>
+              </div>
+            </a>
+            <a href="#" class="app-store-btn" aria-label="Download on the App Store">
+              <i class="fa-brands fa-apple"></i>
+              <div class="btn-text-block">
+                <span class="btn-small-txt">Download on the</span>
+                <span class="btn-bold-txt">App Store</span>
+              </div>
+            </a>
           </div>
         </div>
 
+        <!-- Col 2: Customer services -->
         <div class="footer-links-col">
-          <h4>EXPLORE</h4>
+          <h4>Customer services</h4>
           <ul>
-            <li><a href="#hero">Interactive Video</a></li>
-            <li><a href="#venues">Destination Venues</a></li>
-            <li><a href="#portfolio">Featured Films</a></li>
-            <li><a href="#artistry">Our Process</a></li>
-            <li><a href="#investment">Investment</a></li>
+            <li><a href="#inquiry">Terms of use</a></li>
+            <li><a href="#investment">Scheme Payment</a></li>
+            <li><a href="#inquiry">Privacy Policy</a></li>
           </ul>
         </div>
 
+        <!-- Col 3: Let us help you -->
         <div class="footer-links-col">
-          <h4>TOP DESTINATIONS</h4>
+          <h4>Let us help you</h4>
           <ul>
-            <li><a href="#venues">Lake Como, Italy</a></li>
-            <li><a href="#venues">Amalfi Coast, Italy</a></li>
-            <li><a href="#venues">Provence, France</a></li>
-            <li><a href="#venues">Santorini, Greece</a></li>
-            <li><a href="#venues">Udaipur, India</a></li>
+            <li><a href="#artistry">FAQ</a></li>
+            <li><a href="#inquiry">Contact Us</a></li>
+            <li><a href="#collections">Ring Size Guide</a></li>
+            <li><a href="#collections">Bangle Size Guide</a></li>
           </ul>
         </div>
 
-        <div class="footer-newsletter-col">
-          <h4>DESTINATION WEDDING GUIDE</h4>
-          <p>Receive our complimentary 48-page editorial guide on lighting, timeline planning, and European venues.</p>
-          <form id="newsletterForm" class="footer-newsletter-form">
-            <input type="email" placeholder="Enter your email" required />
-            <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
-          </form>
+        <!-- Col 4: Our company -->
+        <div class="footer-links-col">
+          <h4>Our company</h4>
+          <ul>
+            <li><a href="#venues">About Us</a></li>
+            <li><a href="#inquiry">Careers</a></li>
+            <li><a href="#venues">Store Locator</a></li>
+          </ul>
+          <div class="footer-socials">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+          </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 BIZEVENTS ATELIER. All rights reserved.</span>
-        <div class="footer-sub-links">
-          <a href="#">Privacy Policy</a>
-          <span class="sep">•</span>
-          <a href="#">Terms of Service</a>
-          <span class="sep">•</span>
-          <a href="#">Client Portal</a>
-        </div>
+        <span>© 2026 Lalithaa Jewellery Mart Ltd. All rights reserved.</span>
         <a href="#hero" class="footer-back-to-top" aria-label="Back to Top">
           <i class="fa-solid fa-arrow-up"></i>
-          <span>Back to Top</span>
         </a>
       </div>
     </div>
   </footer>
+
+  <!-- Floating Call & WhatsApp Action Buttons -->
+  <div class="floating-contact-actions">
+    <a href="tel:+914428341111" class="floating-action-btn floating-call-btn" aria-label="Call Us" title="Call Us">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+    <a href="https://wa.me/919840000000" target="_blank" rel="noreferrer" class="floating-action-btn floating-whatsapp-btn" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
 
 
   <!-- ================= LIGHTBOX / VENUE / FILM MODAL ================= -->
