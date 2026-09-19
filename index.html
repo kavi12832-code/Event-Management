@@ -41,15 +41,9 @@
       </div>
 
       <div class="nav-actions">
-        <!-- Luxury Dark Theme Switcher -->
-        <button id="themeToggleBtn" class="theme-mode-toggle" aria-label="Toggle Dark or Light Luxury Theme" title="Toggle Theme">
-          <span class="theme-toggle-track">
-            <span class="theme-toggle-thumb">
-              <i class="fa-solid fa-moon theme-icon-dark"></i>
-              <i class="fa-solid fa-sun theme-icon-light"></i>
-            </span>
-          </span>
-          <span class="theme-toggle-text" id="themeToggleText">Dark Mode</span>
+        <!-- Luxury Dark Theme Switcher (Icon Only) -->
+        <button id="themeToggleBtn" class="theme-icon-btn" aria-label="Toggle Dark or Light Luxury Theme" title="Toggle Theme">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
 
         <a href="#inquiry" class="btn-gold-pill">
@@ -120,11 +114,11 @@
     <div class="venues-fluid-wrap">
       <!-- Section Header -->
       <div class="section-header-editorial container">
-        <div class="section-badge-mono">CURATED LUXURY SETUPS & STAGES</div>
-        <h2 class="section-title">
+        <div class="section-badge-mono scroll-join-left">CURATED LUXURY SETUPS & STAGES</div>
+        <h2 class="section-title scroll-join-left">
           Bespoke Wedding <span class="font-italic-serif gold-gradient-text">Stages & Decor</span> We Craft
         </h2>
-        <p class="section-desc">
+        <p class="section-desc scroll-join-right">
           From monumental floral arches and royal mandaps to modern luminous halo backdrops. Explore our signature event architectures designed for unforgettable celebrations.
         </p>
       </div>
@@ -266,17 +260,17 @@
   <section class="section-portfolio" id="portfolio">
     <div class="container">
       <div class="section-header-editorial">
-        <div class="section-badge-mono">THE PORTFOLIO</div>
-        <h2 class="section-title">
+        <div class="section-badge-mono scroll-join-left">THE PORTFOLIO</div>
+        <h2 class="section-title scroll-join-left">
           Cinematic Films & <span class="font-italic-serif gold-gradient-text">Editorial</span> Stills
         </h2>
-        <p class="section-desc">
+        <p class="section-desc scroll-join-right">
           Every story is captured with authentic emotion, soft golden hour tones, and film-inspired textures.
         </p>
       </div>
 
       <!-- Portfolio Category Tabs -->
-      <div class="portfolio-tab-bar">
+      <div class="portfolio-tab-bar scroll-join-center">
         <button class="portfolio-tab active" data-category="all">All Stories</button>
         <button class="portfolio-tab" data-category="films"><i class="fa-solid fa-film"></i> Cinema Films</button>
         <button class="portfolio-tab" data-category="editorial"><i class="fa-solid fa-camera"></i> Editorial Stills</button>
@@ -289,13 +283,13 @@
         <!-- Injected via app.js -->
       </div>
 
-      <div class="portfolio-cta-box">
-        <div class="cta-inner-content">
+      <div class="portfolio-cta-box scroll-join-center">
+        <div class="cta-inner-content scroll-join-left">
           <span class="gold-tag">FULL ARCHIVE ACCESS</span>
           <h3 class="cta-title">Want to see a complete 900+ photo wedding gallery & full 15-minute film?</h3>
           <p class="cta-desc">We share raw, uncurated full-day client deliveries upon private request.</p>
         </div>
-        <a href="#inquiry" class="btn-gold-pill">
+        <a href="#inquiry" class="btn-gold-pill scroll-join-right">
           <span>Request Private Gallery</span>
           <i class="fa-solid fa-lock"></i>
         </a>
@@ -377,11 +371,11 @@
   <section class="section-investment" id="investment">
     <div class="container">
       <div class="section-header-editorial">
-        <div class="section-badge-mono">INVESTMENT & COLLECTIONS</div>
-        <h2 class="section-title">
+        <div class="section-badge-mono scroll-join-left">INVESTMENT & COLLECTIONS</div>
+        <h2 class="section-title scroll-join-left">
           Bespoke Wedding <span class="font-italic-serif gold-gradient-text">Collections</span>
         </h2>
-        <p class="section-desc">
+        <p class="section-desc scroll-join-right">
           Transparent, all-inclusive luxury coverage tailored to your celebration scale and destination requirements.
         </p>
       </div>
@@ -389,7 +383,7 @@
       <!-- 3 Featured Packages -->
       <div class="packages-grid">
         <!-- Package 1: The Intimate -->
-        <div class="package-card">
+        <div class="package-card scroll-join-left">
           <div class="pkg-header">
             <span class="pkg-tag">ELOPEMENTS & INTIMATE DAYS</span>
             <h3 class="pkg-name">The Intimate Atelier</h3>
@@ -413,7 +407,7 @@
         </div>
 
         <!-- Package 2: The Grand Heritage (Featured) -->
-        <div class="package-card featured">
+        <div class="package-card featured scroll-join-center">
           <div class="featured-ribbon">MOST POPULAR SIGNATURE</div>
           <div class="pkg-header">
             <span class="pkg-tag">FULL WEEKEND & DESTINATION</span>
@@ -439,7 +433,7 @@
         </div>
 
         <!-- Package 3: The Worldwide Couture -->
-        <div class="package-card">
+        <div class="package-card scroll-join-right">
           <div class="pkg-header">
             <span class="pkg-tag">ULTRA-LUXURY MULTI-DAY</span>
             <h3 class="pkg-name">The Worldwide Couture</h3>
@@ -467,13 +461,13 @@
 
       <!-- Interactive Custom Quote Calculator -->
       <div class="calculator-card">
-        <div class="calc-header">
+        <div class="calc-header scroll-join-center">
           <span class="section-badge-mono">BESPOKE CUSTOMIZER</span>
           <h3 class="calc-title">Build Your Custom Experience Quote</h3>
           <p class="calc-subtitle">Tailor the exact coverage hours, analog rolls, drone flights, and heirloom albums to your itinerary.</p>
         </div>
 
-        <div class="calc-controls-grid">
+        <div class="calc-controls-grid scroll-join-left">
           <div class="calc-control-group">
             <label>Wedding Day Coverage: <span id="hoursValLabel" class="gold-bold">10 Hours</span></label>
             <input type="range" id="calcHoursRange" min="6" max="16" value="10" step="1" class="gold-range-slider" />
@@ -523,7 +517,7 @@
           </div>
         </div>
 
-        <div class="calc-summary-row">
+        <div class="calc-summary-row scroll-join-right">
           <div class="calc-total-box">
             <span class="calc-total-label">ESTIMATED INVESTMENT</span>
             <div class="calc-total-figure">
@@ -546,16 +540,16 @@
   <section class="section-stories" id="stories">
     <div class="container">
       <div class="section-header-editorial">
-        <div class="section-badge-mono">WORDS FROM OUR COUPLES</div>
-        <h2 class="section-title">
+        <div class="section-badge-mono scroll-join-left">WORDS FROM OUR COUPLES</div>
+        <h2 class="section-title scroll-join-left">
           Eternal <span class="font-italic-serif gold-gradient-text">Love Stories</span> & Praises
         </h2>
-        <p class="section-desc">
+        <p class="section-desc scroll-join-right">
           Hear from couples whose destination celebrations we had the true honor of preserving.
         </p>
       </div>
 
-      <div class="reviews-slider-container">
+      <div class="reviews-slider-container scroll-join-center">
         <div class="review-cards-track" id="reviewTrack">
           <!-- Injected via app.js -->
         </div>
@@ -568,7 +562,7 @@
       </div>
 
       <!-- Publications & Badges -->
-      <div class="press-banner">
+      <div class="press-banner scroll-join-center">
         <span class="press-title">PROUDLY PUBLISHED & RECOGNIZED BY</span>
         <div class="press-logos">
           <span class="press-item">VOGUE WEDDINGS</span>
@@ -587,7 +581,7 @@
   <section class="section-inquiry" id="inquiry">
     <div class="container">
       <div class="inquiry-card-wrapper">
-        <div class="inquiry-intro-col">
+        <div class="inquiry-intro-col scroll-join-left">
           <div class="section-badge-mono">CONNECT & INQUIRE</div>
           <h2 class="inquiry-title">
             Let's Create Your <span class="font-italic-serif gold-gradient-text">Heirloom</span>
@@ -623,7 +617,7 @@
           </div>
         </div>
 
-        <div class="inquiry-form-col">
+        <div class="inquiry-form-col scroll-join-right">
           <form id="bookingInquiryForm" class="luxury-form">
             <div class="form-row-2">
               <div class="form-group">

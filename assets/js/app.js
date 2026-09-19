@@ -15,17 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
      0. LUXURY DARK / LIGHT THEME COLOR GRADE CONTROLLER
      ========================================================================== */
   const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const themeToggleText = document.getElementById('themeToggleText');
+  const themeIcon = document.getElementById('themeIcon');
 
   function applyTheme(isDark) {
     if (isDark) {
       document.body.classList.add('dark-theme');
-      if (themeToggleText) themeToggleText.textContent = 'Light Mode';
-      if (themeToggleBtn) themeToggleBtn.setAttribute('title', 'Switch to Cream Luxury Theme');
+      if (themeIcon) {
+        themeIcon.className = 'fa-solid fa-sun';
+        themeIcon.style.transform = 'rotate(180deg)';
+      }
+      if (themeToggleBtn) {
+        themeToggleBtn.setAttribute('title', 'Switch to Cream Luxury Mode');
+        themeToggleBtn.setAttribute('aria-label', 'Switch to Cream Luxury Mode');
+      }
     } else {
       document.body.classList.remove('dark-theme');
-      if (themeToggleText) themeToggleText.textContent = 'Dark Mode';
-      if (themeToggleBtn) themeToggleBtn.setAttribute('title', 'Switch to Noir Dark Theme');
+      if (themeIcon) {
+        themeIcon.className = 'fa-solid fa-moon';
+        themeIcon.style.transform = 'rotate(0deg)';
+      }
+      if (themeToggleBtn) {
+        themeToggleBtn.setAttribute('title', 'Switch to Noir Dark Mode');
+        themeToggleBtn.setAttribute('aria-label', 'Switch to Noir Dark Mode');
+      }
     }
   }
 
@@ -560,6 +572,9 @@ document.addEventListener('DOMContentLoaded', () => {
               vid.play().catch(() => {});
             }
           } else {
+            // Remove is-joined when scrolled out of view so animation repeats every time user scrolls!
+            entry.target.classList.remove('is-joined');
+
             // Pause offscreen videos to maximize performance
             const vid = entry.target.querySelector('video');
             if (vid && !vid.paused) {
@@ -568,8 +583,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -30px 0px'
       });
 
       // Observe all initial static elements
