@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIZEVENTS — Fine Art Wedding Photography & Videography</title>
+  <meta name="description" content="Editorial wedding photography & cinematic films for discerning couples worldwide. Inspired by timeless romance, destination estates, and fine art storytelling." />
+  
+  <!-- Fonts: Cormorant Garamond, Playfair Display, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="luxury-theme">
+
+  <!-- ================= STICKY MAIN NAVIGATION ================= -->
+  <nav class="main-navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo">
+        <span class="brand-monogram">B</span>
+        <div class="brand-text-group">
+          <span class="brand-title">BIZEVENTS</span>
+          <span class="brand-subtitle">CINEMA & PHOTOGRAPHY</span>
+        </div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#venues" class="nav-link">Venues & Destinations</a>
+        <a href="#convergence" class="nav-link">Convergence</a>
+        <a href="#portfolio" class="nav-link">Films & Stills</a>
+        <a href="#artistry" class="nav-link">Our Artistry</a>
+        <a href="#investment" class="nav-link">Collections</a>
+        <a href="#stories" class="nav-link">Love Stories</a>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Luxury Dark Theme Switcher -->
+        <button id="themeToggleBtn" class="theme-mode-toggle" aria-label="Toggle Dark or Light Luxury Theme" title="Toggle Theme">
+          <span class="theme-toggle-track">
+            <span class="theme-toggle-thumb">
+              <i class="fa-solid fa-moon theme-icon-dark"></i>
+              <i class="fa-solid fa-sun theme-icon-light"></i>
+            </span>
+          </span>
+          <span class="theme-toggle-text" id="themeToggleText">Dark Mode</span>
+        </button>
+
+        <a href="#inquiry" class="btn-gold-pill">
+          <span>Inquire Date</span>
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION (CURSOR-SCRUBBED VIDEO CANVAS) ================= -->
+  <section class="hero-section" id="hero">
+    <!-- Interactive Canvas Background -->
+    <div class="hero-canvas-wrapper" id="heroCanvasWrapper">
+      <canvas id="videoCanvas" width="1920" height="1080"></canvas>
+      <div class="canvas-grain-overlay"></div>
+      <div class="canvas-vignette-overlay"></div>
+      
+      <!-- Frame Loading Overlay -->
+      <div class="canvas-loader" id="canvasLoader">
+        <div class="loader-spinner"></div>
+        <div class="loader-status">
+          <span class="loader-title">PREPARING CINEMATIC SEQUENCE</span>
+          <div class="loader-progress-bar">
+            <div class="loader-progress-fill" id="loaderFill"></div>
+          </div>
+          <span class="loader-counter" id="loaderCount">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Content Overlay -->
+    <div class="hero-content-container">
+      <div class="container hero-inner">
+        <div class="hero-badge">
+          <i class="fa-solid fa-crown gold-icon"></i>
+          <span>FINE ART WEDDING CINEMATOGRAPHY & PHOTOGRAPHY</span>
+        </div>
+
+        <h1 class="hero-headline">
+          Capturing the <span class="font-italic-serif gold-gradient-text">Poetry</span> of Your <span class="font-serif gold-gradient-text">Eternal</span> Day.
+        </h1>
+
+        <p class="hero-subheading">
+          Where timeless elegance meets editorial motion. We document genuine moments, atmospheric light, and grand love stories across the world's most romantic destination estates.
+        </p>
+
+        <div class="hero-cta-row">
+          <a href="#inquiry" class="btn-luxury-solid">
+            <span>Reserve Your Date</span>
+            <i class="fa-solid fa-calendar-check"></i>
+          </a>
+          <a href="#portfolio" class="btn-luxury-outline">
+            <i class="fa-solid fa-film"></i>
+            <span>Watch Full Films</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= AISLE-INSPIRED DESTINATION VENUES EXPLORER ================= -->
+  <section class="section-venues" id="venues">
+    <div class="venues-fluid-wrap">
+      <!-- Section Header -->
+      <div class="section-header-editorial container">
+        <div class="section-badge-mono">CURATED LUXURY SETUPS & STAGES</div>
+        <h2 class="section-title">
+          Bespoke Wedding <span class="font-italic-serif gold-gradient-text">Stages & Decor</span> We Craft
+        </h2>
+        <p class="section-desc">
+          From monumental floral arches and royal mandaps to modern luminous halo backdrops. Explore our signature event architectures designed for unforgettable celebrations.
+        </p>
+      </div>
+
+      <!-- 3D Interactive Infinite Marquee Gallery -->
+      <div class="venues-marquee-viewport" id="venuesMarqueeViewport">
+        <div class="marquee-edge-gradient gradient-left" aria-hidden="true"></div>
+        <div class="marquee-edge-gradient gradient-right" aria-hidden="true"></div>
+        
+        <!-- Track Row 1: Leftward Infinite Marquee with 3D Cards -->
+        <div class="venues-marquee-track marquee-row-1" id="venuesMarqueeTrack1">
+          <!-- Populated by app.js -->
+        </div>
+
+        <!-- Track Row 2: Rightward Infinite Marquee with 3D Cards -->
+        <div class="venues-marquee-track marquee-row-2" id="venuesMarqueeTrack2">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= THE ART OF CONVERGENCE (LEFT & RIGHT SCROLL JOIN) ================= -->
+  <section class="section-convergence" id="convergence">
+    <div class="container">
+      <div class="section-header-editorial scroll-join-center">
+        <div class="section-badge-mono">THE ART OF CONVERGENCE</div>
+        <h2 class="section-title">
+          Motion & Stillness <span class="font-italic-serif gold-gradient-text">Joining in Unison</span>
+        </h2>
+        <p class="section-desc">
+          As you scroll, watch live cinematic video narratives and editorial stills fly in from opposing horizons—joining together at the center into a harmonious celebration.
+        </p>
+      </div>
+
+      <!-- Convergence Showcase Pair 1: Left Cinema Film & Right Grand Decor Still -->
+      <div class="convergence-pair" data-pair="1">
+        <!-- Left Item: Glides from Left -->
+        <div class="convergence-card convergence-card-left scroll-join-left" data-frames="assets/frames/five-image" data-total-frames="300" data-video="assets/videos/video-ananya-raghav.mp4" data-title="Ananya & Raghav — Nocturnal Elegance" data-meta="JAIPUR ROYAL PALACE • MASTER FILM" data-desc="Sweeping candlelit ballroom cinema shot on Sony Cine FX3 with anamorphic optics." data-gear="Sony FX3 Cine • 50mm f/1.2 GM • DJI Ronin RS3 Pro">
+          <div class="convergence-media-wrap">
+            <canvas class="convergence-canvas"></canvas>
+            <video class="convergence-video" src="assets/videos/video-ananya-raghav.mp4" poster="assets/frames/five-image/frame_001.jpg" autoplay muted loop playsinline preload="auto"></video>
+            <div class="convergence-media-gradient"></div>
+            <button class="convergence-sound-toggle" aria-label="Toggle Audio" title="Unmute/Mute Audio">
+              <i class="fa-solid fa-volume-xmark"></i>
+            </button>
+            <span class="convergence-media-badge"><i class="fa-solid fa-film"></i> 4K LIVE CINEMA</span>
+          </div>
+          <div class="convergence-caption">
+            <span class="conv-meta">JAIPUR ROYAL PALACE • MASTER FILM</span>
+            <h3 class="conv-title">Ananya & Raghav — Nocturnal Elegance</h3>
+            <p class="conv-desc">Sweeping candlelit ballroom cinema shot on Sony Cine FX3 with anamorphic optics.</p>
+          </div>
+        </div>
+
+        <!-- Center Confluence Medallion -->
+        <div class="convergence-connector scroll-join-center">
+          <div class="connector-line"></div>
+          <div class="connector-medallion">
+            <span class="medallion-monogram">B</span>
+            <span class="medallion-label">CONFLUENCE</span>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+
+        <!-- Right Item: Glides from Right -->
+        <div class="convergence-card convergence-card-right scroll-join-right" data-frames="assets/frames/kk1" data-total-frames="300" data-venue-id="concentric-halo-white" data-title="The Monolithic Golden Floral Dome" data-meta="BESPOKE ARCHITECTURE • FINE ART STILL" data-desc="Handcrafted golden mandala architecture bathed in warm halogen glow and jasmine cascades." data-gear="Sony A7R V • 24-70mm GM II • 4K 10-Bit Cinematic Drone Pan">
+          <div class="convergence-media-wrap">
+            <img class="convergence-img" src="assets/images/decor/decor-stage-4.png" alt="Grand Royal Botanical Mandap Decor" loading="lazy" />
+            <canvas class="convergence-canvas"></canvas>
+            <div class="convergence-media-gradient"></div>
+            <span class="convergence-media-badge"><i class="fa-solid fa-camera"></i> EDITORIAL STILL</span>
+            <button class="convergence-play-badge" aria-label="Play Background Video" title="Click to Play Video">
+              <i class="fa-solid fa-play"></i>
+            </button>
+          </div>
+          <div class="convergence-caption">
+            <span class="conv-meta">BESPOKE ARCHITECTURE • FINE ART STILL</span>
+            <h3 class="conv-title">The Monolithic Golden Floral Dome</h3>
+            <p class="conv-desc">Handcrafted golden mandala architecture bathed in warm halogen glow and jasmine cascades.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Convergence Showcase Pair 2: Left Fine Art Still & Right Sacred Vows Cinema Film -->
+      <div class="convergence-pair" data-pair="2">
+        <!-- Left Item: Glides from Left -->
+        <div class="convergence-card convergence-card-left scroll-join-left" data-frames="assets/frames/one-image" data-total-frames="151" data-venue-id="pastel-heart-blossom" data-title="Luminescent Halo & Pastel Horizon" data-meta="COUTURE STAGE • FINE ART STILL" data-desc="Sculptural heart arches interwoven with blush blossoms, custom illuminated plinths, and crystal accents." data-gear="Hasselblad 500 C/M • 80mm Zeiss • Portra 800">
+          <div class="convergence-media-wrap">
+            <img class="convergence-img" src="assets/images/decor/decor-stage-1.jpg" alt="Luminescent Heart & Pastel Floral Arch" loading="lazy" />
+            <canvas class="convergence-canvas"></canvas>
+            <div class="convergence-media-gradient"></div>
+            <span class="convergence-media-badge"><i class="fa-solid fa-camera"></i> EDITORIAL STILL</span>
+            <button class="convergence-play-badge" aria-label="Play Background Video" title="Click to Play Video">
+              <i class="fa-solid fa-play"></i>
+            </button>
+          </div>
+          <div class="convergence-caption">
+            <span class="conv-meta">COUTURE STAGE • FINE ART STILL</span>
+            <h3 class="conv-title">Luminescent Halo & Pastel Horizon</h3>
+            <p class="conv-desc">Sculptural heart arches interwoven with blush blossoms, custom illuminated plinths, and crystal accents.</p>
+          </div>
+        </div>
+
+        <!-- Center Confluence Medallion -->
+        <div class="convergence-connector scroll-join-center">
+          <div class="connector-line"></div>
+          <div class="connector-medallion">
+            <span class="medallion-monogram">B</span>
+            <span class="medallion-label">CONFLUENCE</span>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+
+        <!-- Right Item: Glides from Right -->
+        <div class="convergence-card convergence-card-right scroll-join-right" data-frames="assets/frames/three-image" data-total-frames="300" data-video="assets/videos/video-sanjana-vikram.mp4" data-title="Sanjana & Vikram — The Sacred Vows" data-meta="HYDERABAD PALACE • FEATURE TEASER" data-desc="Intimate Vedic ceremonies captured with medium format tonal depth and warm heirloom grades." data-gear="RED Komodo 6K • Leica Summicron 35mm • Sony FX3">
+          <div class="convergence-media-wrap">
+            <canvas class="convergence-canvas"></canvas>
+            <video class="convergence-video" src="assets/videos/video-sanjana-vikram.mp4" poster="assets/frames/three-image/frame_001.jpg" autoplay muted loop playsinline preload="auto"></video>
+            <div class="convergence-media-gradient"></div>
+            <button class="convergence-sound-toggle" aria-label="Toggle Audio" title="Unmute/Mute Audio">
+              <i class="fa-solid fa-volume-xmark"></i>
+            </button>
+            <span class="convergence-media-badge"><i class="fa-solid fa-film"></i> 4K LIVE CINEMA</span>
+          </div>
+          <div class="convergence-caption">
+            <span class="conv-meta">HYDERABAD PALACE • FEATURE TEASER</span>
+            <h3 class="conv-title">Sanjana & Vikram — The Sacred Vows</h3>
+            <p class="conv-desc">Intimate Vedic ceremonies captured with medium format tonal depth and warm heirloom grades.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= PORTFOLIO (FILMS & STILLS) ================= -->
+  <section class="section-portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-header-editorial">
+        <div class="section-badge-mono">THE PORTFOLIO</div>
+        <h2 class="section-title">
+          Cinematic Films & <span class="font-italic-serif gold-gradient-text">Editorial</span> Stills
+        </h2>
+        <p class="section-desc">
+          Every story is captured with authentic emotion, soft golden hour tones, and film-inspired textures.
+        </p>
+      </div>
+
+      <!-- Portfolio Category Tabs -->
+      <div class="portfolio-tab-bar">
+        <button class="portfolio-tab active" data-category="all">All Stories</button>
+        <button class="portfolio-tab" data-category="films"><i class="fa-solid fa-film"></i> Cinema Films</button>
+        <button class="portfolio-tab" data-category="editorial"><i class="fa-solid fa-camera"></i> Editorial Stills</button>
+        <button class="portfolio-tab" data-category="elopement"><i class="fa-solid fa-mountain-sun"></i> Elopements</button>
+        <button class="portfolio-tab" data-category="analog"><i class="fa-solid fa-compact-disc"></i> 35mm Analog Rolls</button>
+      </div>
+
+      <!-- Gallery Masonry / Grid -->
+      <div class="portfolio-masonry-grid" id="portfolioGrid">
+        <!-- Injected via app.js -->
+      </div>
+
+      <div class="portfolio-cta-box">
+        <div class="cta-inner-content">
+          <span class="gold-tag">FULL ARCHIVE ACCESS</span>
+          <h3 class="cta-title">Want to see a complete 900+ photo wedding gallery & full 15-minute film?</h3>
+          <p class="cta-desc">We share raw, uncurated full-day client deliveries upon private request.</p>
+        </div>
+        <a href="#inquiry" class="btn-gold-pill">
+          <span>Request Private Gallery</span>
+          <i class="fa-solid fa-lock"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= OUR ARTISTRY & APPROACH ================= -->
+  <section class="section-artistry" id="artistry">
+    <div class="container">
+      <div class="artistry-layout">
+        <div class="artistry-left scroll-join-left">
+          <div class="section-badge-mono">THE ART OF TWO MEDIUMS</div>
+          <h2 class="artistry-heading">
+            Photography and Cinema in <span class="font-italic-serif gold-gradient-text">Absolute Harmony</span>
+          </h2>
+          <p class="artistry-lead">
+            When your photographer and filmmaker operate as one synchronized unit, magic happens. No stepping on toes, no mismatched color grades—just seamless, fluid documentation.
+          </p>
+
+          <div class="artistry-pillars">
+            <div class="pillar-card">
+              <div class="pillar-icon"><i class="fa-solid fa-palette"></i></div>
+              <div class="pillar-content">
+                <h4>Unified Color Science</h4>
+                <p>Our warm cream and golden tones are calibrated across all Sony Cine 4K video clips and medium format stills, giving you a singular aesthetic.</p>
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <div class="pillar-icon"><i class="fa-solid fa-film"></i></div>
+              <div class="pillar-content">
+                <h4>Authentic 35mm & 120mm Analog</h4>
+                <p>Real Kodak Portra & Ilford black-and-white film rolls shot alongside modern high-speed sensors for rich, tactile nostalgia.</p>
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <div class="pillar-icon"><i class="fa-solid fa-feather-pointed"></i></div>
+              <div class="pillar-content">
+                <h4>Unobtrusive Editorial Flow</h4>
+                <p>We guide naturally when needed and dissolve into the background during intimate moments, letting you truly live your wedding day.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="artistry-right scroll-join-right">
+          <div class="artistry-visual-card">
+            <div class="visual-badge">
+              <i class="fa-solid fa-award"></i>
+              <span>MASTER CRAFT</span>
+            </div>
+            <div class="artistry-quote-block">
+              <p class="quote-text">
+                "They didn't just document our wedding in Lake Como—they crafted an heirloom art piece that our families will cherish for generations."
+              </p>
+              <div class="quote-author">
+                <strong>Genevieve & Alessandro</strong>
+                <span>Villa Balbiano, Italy</span>
+              </div>
+            </div>
+            <div class="gear-specs-strip">
+              <div class="spec-pill">Leica M11-P</div>
+              <div class="spec-pill">Sony FX3 Cine</div>
+              <div class="spec-pill">Hasselblad 500C/M</div>
+              <div class="spec-pill">DJI Mavic 3 Pro Cine</div>
+              <div class="spec-pill">4K 10-Bit ProRES</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= BESPOKE COLLECTIONS & INVESTMENT CALCULATOR ================= -->
+  <section class="section-investment" id="investment">
+    <div class="container">
+      <div class="section-header-editorial">
+        <div class="section-badge-mono">INVESTMENT & COLLECTIONS</div>
+        <h2 class="section-title">
+          Bespoke Wedding <span class="font-italic-serif gold-gradient-text">Collections</span>
+        </h2>
+        <p class="section-desc">
+          Transparent, all-inclusive luxury coverage tailored to your celebration scale and destination requirements.
+        </p>
+      </div>
+
+      <!-- 3 Featured Packages -->
+      <div class="packages-grid">
+        <!-- Package 1: The Intimate -->
+        <div class="package-card">
+          <div class="pkg-header">
+            <span class="pkg-tag">ELOPEMENTS & INTIMATE DAYS</span>
+            <h3 class="pkg-name">The Intimate Atelier</h3>
+            <div class="pkg-price-row">
+              <span class="currency-symbol">$</span>
+              <span class="pkg-amount" data-usd="4800" data-eur="4400" data-gbp="3800" data-inr="395000">4,800</span>
+              <span class="pkg-period">/ Single Day</span>
+            </div>
+            <p class="pkg-brief">Perfect for elopements and single-day boutique estate weddings.</p>
+          </div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li><i class="fa-solid fa-check gold-check"></i> 8 Hours Seamless Coverage</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Lead Photographer & Lead Cinematographer</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 500+ High-Res Curated Color Stills</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 4–5 Min Cinematic Highlight Film (4K)</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 48-Hour Sneak Peek Gallery (30 Photos)</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Private Online Viewing & Download Vault</li>
+          </ul>
+          <a href="#inquiry" class="btn-pkg-select" data-select-pkg="The Intimate Atelier">Select This Collection</a>
+        </div>
+
+        <!-- Package 2: The Grand Heritage (Featured) -->
+        <div class="package-card featured">
+          <div class="featured-ribbon">MOST POPULAR SIGNATURE</div>
+          <div class="pkg-header">
+            <span class="pkg-tag">FULL WEEKEND & DESTINATION</span>
+            <h3 class="pkg-name">The Grand Heritage</h3>
+            <div class="pkg-price-row">
+              <span class="currency-symbol">$</span>
+              <span class="pkg-amount" data-usd="8600" data-eur="7900" data-gbp="6800" data-inr="710000">8,600</span>
+              <span class="pkg-period">/ Multi-Day</span>
+            </div>
+            <p class="pkg-brief">Our signature duo experience for full wedding days & welcome dinner celebrations.</p>
+          </div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li><i class="fa-solid fa-check gold-check"></i> Up to 12 Hours Wedding Day + 3h Welcome Party</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 2 Master Photographers + 2 Master Filmmakers</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 900+ Hand-Edited High-Res Stills</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 8–10 Min Extended Feature Film + Teaser Reel</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 4K Drone Aerial Cinema Coverage</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 4 Rolls of 35mm & 120mm Analog Film</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Bespoke Handcrafted Fine Art Linen Album (12x12)</li>
+          </ul>
+          <a href="#inquiry" class="btn-pkg-select highlight" data-select-pkg="The Grand Heritage">Select Signature Experience</a>
+        </div>
+
+        <!-- Package 3: The Worldwide Couture -->
+        <div class="package-card">
+          <div class="pkg-header">
+            <span class="pkg-tag">ULTRA-LUXURY MULTI-DAY</span>
+            <h3 class="pkg-name">The Worldwide Couture</h3>
+            <div class="pkg-price-row">
+              <span class="currency-symbol">$</span>
+              <span class="pkg-amount" data-usd="13500" data-eur="12500" data-gbp="10700" data-inr="1115000">13,500</span>
+              <span class="pkg-period">/ Full Weekend</span>
+            </div>
+            <p class="pkg-brief">Unrestricted multi-day celebration across all parties, excursions, and vows.</p>
+          </div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li><i class="fa-solid fa-check gold-check"></i> 3 Full Days Unlimited Coverage</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Full 4-Person Master Creative Production Crew</li>
+            <li><i class="fa-solid fa-check gold-check"></i> 1,400+ Complete Edited Master Archive</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Full 20-Min Documentary Master + 60s Reels</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Multi-Location 4K Drone & FPV Cinema</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Unlimited Analog Film + Same-Day Teaser Video</li>
+            <li><i class="fa-solid fa-check gold-check"></i> Deluxe Leather Heirloom Album + 2 Parent Albums</li>
+            <li><i class="fa-solid fa-check gold-check"></i> All Worldwide Travel Expenses Included</li>
+          </ul>
+          <a href="#inquiry" class="btn-pkg-select" data-select-pkg="The Worldwide Couture">Select Couture Experience</a>
+        </div>
+      </div>
+
+      <!-- Interactive Custom Quote Calculator -->
+      <div class="calculator-card">
+        <div class="calc-header">
+          <span class="section-badge-mono">BESPOKE CUSTOMIZER</span>
+          <h3 class="calc-title">Build Your Custom Experience Quote</h3>
+          <p class="calc-subtitle">Tailor the exact coverage hours, analog rolls, drone flights, and heirloom albums to your itinerary.</p>
+        </div>
+
+        <div class="calc-controls-grid">
+          <div class="calc-control-group">
+            <label>Wedding Day Coverage: <span id="hoursValLabel" class="gold-bold">10 Hours</span></label>
+            <input type="range" id="calcHoursRange" min="6" max="16" value="10" step="1" class="gold-range-slider" />
+            <div class="range-markers">
+              <span>6 hrs (Intimate)</span>
+              <span>10 hrs (Standard)</span>
+              <span>16 hrs (Extended)</span>
+            </div>
+          </div>
+
+          <div class="calc-addons-grid">
+            <label class="checkbox-container">
+              <input type="checkbox" id="addWelcomeParty" checked />
+              <span class="checkmark"></span>
+              <span class="chk-label">
+                <strong>Welcome Party / Rehearsal (+3 hrs)</strong>
+                <small>+$850</small>
+              </span>
+            </label>
+
+            <label class="checkbox-container">
+              <input type="checkbox" id="addDrone" checked />
+              <span class="checkmark"></span>
+              <span class="chk-label">
+                <strong>4K Licensed Drone Cinema Aerials</strong>
+                <small>+$600</small>
+              </span>
+            </label>
+
+            <label class="checkbox-container">
+              <input type="checkbox" id="addAnalogFilm" checked />
+              <span class="checkmark"></span>
+              <span class="chk-label">
+                <strong>Analog Film Rolls (35mm + 120mm)</strong>
+                <small>+$500</small>
+              </span>
+            </label>
+
+            <label class="checkbox-container">
+              <input type="checkbox" id="addHeirloomAlbum" />
+              <span class="checkmark"></span>
+              <span class="chk-label">
+                <strong>Italian Leather Heirloom Album (12x12)</strong>
+                <small>+$1,100</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="calc-summary-row">
+          <div class="calc-total-box">
+            <span class="calc-total-label">ESTIMATED INVESTMENT</span>
+            <div class="calc-total-figure">
+              <span class="calc-currency-symbol">$</span>
+              <span id="calcTotalAmount">7,750</span>
+            </div>
+            <span class="calc-notes">*Includes complete color grading, sound engineering & online archival backup.</span>
+          </div>
+          <button id="applyCalcToInquiry" class="btn-luxury-solid">
+            <span>Apply to Booking Inquiry</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= LOVE STORIES & CLIENT PRAISE ================= -->
+  <section class="section-stories" id="stories">
+    <div class="container">
+      <div class="section-header-editorial">
+        <div class="section-badge-mono">WORDS FROM OUR COUPLES</div>
+        <h2 class="section-title">
+          Eternal <span class="font-italic-serif gold-gradient-text">Love Stories</span> & Praises
+        </h2>
+        <p class="section-desc">
+          Hear from couples whose destination celebrations we had the true honor of preserving.
+        </p>
+      </div>
+
+      <div class="reviews-slider-container">
+        <div class="review-cards-track" id="reviewTrack">
+          <!-- Injected via app.js -->
+        </div>
+
+        <div class="review-nav-controls">
+          <button class="review-ctrl-btn" id="prevReviewBtn" aria-label="Previous Testimonial"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="review-dots" id="reviewDots"></div>
+          <button class="review-ctrl-btn" id="nextReviewBtn" aria-label="Next Testimonial"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Publications & Badges -->
+      <div class="press-banner">
+        <span class="press-title">PROUDLY PUBLISHED & RECOGNIZED BY</span>
+        <div class="press-logos">
+          <span class="press-item">VOGUE WEDDINGS</span>
+          <span class="press-item">HARPER'S BAZAAR</span>
+          <span class="press-item">OVER THE MOON</span>
+          <span class="press-item">JUNEBUG WEDDINGS</span>
+          <span class="press-item">THE LANE</span>
+          <span class="press-item">STYLE ME PRETTY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= LUXURY BOOKING & AVAILABILITY INQUIRY ================= -->
+  <section class="section-inquiry" id="inquiry">
+    <div class="container">
+      <div class="inquiry-card-wrapper">
+        <div class="inquiry-intro-col">
+          <div class="section-badge-mono">CONNECT & INQUIRE</div>
+          <h2 class="inquiry-title">
+            Let's Create Your <span class="font-italic-serif gold-gradient-text">Heirloom</span>
+          </h2>
+          <p class="inquiry-p">
+            Tell us about your celebration, your vision, and the moments you cherish most. We respond to all qualified inquiries within 24 hours with a custom proposal and video call invitation.
+          </p>
+
+          <div class="inquiry-contact-details">
+            <div class="contact-line">
+              <i class="fa-solid fa-envelope gold-icon"></i>
+              <span>atelier@bizevents.com</span>
+            </div>
+            <div class="contact-line">
+              <i class="fa-brands fa-whatsapp gold-icon"></i>
+              <span>+1 (212) 847-9200 / +39 06 9480 3321</span>
+            </div>
+            <div class="contact-line">
+              <i class="fa-solid fa-location-dot gold-icon"></i>
+              <span>Offices in Lake Como • Paris • New York</span>
+            </div>
+          </div>
+
+          <div class="client-rating-box">
+            <div class="rating-stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="rating-text">5.0 Star Rating across 120+ International Verified Reviews</span>
+          </div>
+        </div>
+
+        <div class="inquiry-form-col">
+          <form id="bookingInquiryForm" class="luxury-form">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="coupleNames">Couple Names *</label>
+                <input type="text" id="coupleNames" required placeholder="e.g. Elena & Julian" />
+              </div>
+              <div class="form-group">
+                <label for="clientEmail">Email Address *</label>
+                <input type="email" id="clientEmail" required placeholder="elena@example.com" />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="weddingDate">Wedding Date / Month & Year *</label>
+                <input type="text" id="weddingDate" required placeholder="e.g. September 18, 2026" />
+              </div>
+              <div class="form-group">
+                <label for="venueLocation">Venue & Location *</label>
+                <input type="text" id="venueLocation" required placeholder="e.g. Villa Balbiano, Lake Como, Italy" />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="coverageInterest">Services Desired</label>
+                <select id="coverageInterest">
+                  <option value="both">Both Photography & Cinema (Recommended)</option>
+                  <option value="photo">Photography Only</option>
+                  <option value="cinema">Cinematography Only</option>
+                  <option value="multiday">Multi-Day Celebration / Weekend</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="chosenPackage">Collection Preference</label>
+                <select id="chosenPackage">
+                  <option value="The Grand Heritage">The Grand Heritage (Signature)</option>
+                  <option value="The Intimate Atelier">The Intimate Atelier</option>
+                  <option value="The Worldwide Couture">The Worldwide Couture</option>
+                  <option value="Custom Quote">Custom Tailored Proposal</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="weddingDetails">Tell us about your story & vision *</label>
+              <textarea id="weddingDetails" rows="4" required placeholder="Share details about your aesthetic, music preferences, guest count, or any special moments you have planned..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-luxury-submit">
+              <span>Send Wedding Inquiry</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            <p class="form-privacy-note"><i class="fa-solid fa-lock"></i> Your information is kept strictly private and never shared.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="main-footer">
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand-block">
+          <div class="brand-monogram large">B</div>
+          <span class="footer-brand-title">BIZEVENTS ATELIER</span>
+          <p class="footer-tagline">Fine art wedding photography and timeless cinematography for celebrations worldwide.</p>
+          <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://vimeo.com" target="_blank" rel="noreferrer" aria-label="Vimeo"><i class="fa-brands fa-vimeo-v"></i></a>
+            <a href="https://pinterest.com" target="_blank" rel="noreferrer" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>EXPLORE</h4>
+          <ul>
+            <li><a href="#hero">Interactive Video</a></li>
+            <li><a href="#venues">Destination Venues</a></li>
+            <li><a href="#portfolio">Featured Films</a></li>
+            <li><a href="#artistry">Our Process</a></li>
+            <li><a href="#investment">Investment</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>TOP DESTINATIONS</h4>
+          <ul>
+            <li><a href="#venues">Lake Como, Italy</a></li>
+            <li><a href="#venues">Amalfi Coast, Italy</a></li>
+            <li><a href="#venues">Provence, France</a></li>
+            <li><a href="#venues">Santorini, Greece</a></li>
+            <li><a href="#venues">Udaipur, India</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter-col">
+          <h4>DESTINATION WEDDING GUIDE</h4>
+          <p>Receive our complimentary 48-page editorial guide on lighting, timeline planning, and European venues.</p>
+          <form id="newsletterForm" class="footer-newsletter-form">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 BIZEVENTS ATELIER. All rights reserved.</span>
+        <div class="footer-sub-links">
+          <a href="#">Privacy Policy</a>
+          <span class="sep">•</span>
+          <a href="#">Terms of Service</a>
+          <span class="sep">•</span>
+          <a href="#">Client Portal</a>
+        </div>
+        <a href="#hero" class="footer-back-to-top" aria-label="Back to Top">
+          <i class="fa-solid fa-arrow-up"></i>
+          <span>Back to Top</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ================= LIGHTBOX / VENUE / FILM MODAL ================= -->
+  <div class="luxury-modal" id="luxuryModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content-card">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic content injected via app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="luxury-toast" id="luxuryToast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMsg">Inquiry sent successfully!</span>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

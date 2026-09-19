@@ -1,0 +1,20 @@
+{
+  "name": "event_management_website",
+  "version": "1.0.0",
+  "description": "BIZEVENTS Atelier — Luxury Event Management & Wedding Cinema Website with Interactive Canvas and Scroll Convergence Animation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "event-management",
+    "wedding-cinematography",
+    "fine-art-photography",
+    "interactive-canvas",
+    "scroll-convergence",
+    "luxury-web-design"
+  ],
+  "author": "Bizentrix",
+  "license": "MIT"
+}
